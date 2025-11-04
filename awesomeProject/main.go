@@ -50,6 +50,19 @@ func getTodoById(id string) (*todo, error) {
 	return nil, errors.New("todo not found")
 }
 
+func toggleTodoStatus(context *gin.Context) {
+	id := context.Param("id")
+	todo, err := getTodoById(id)
+
+	if err != nil {
+		context.IndentedJSON(http.StatusNotFound, gin.H{"message": err.Error()})
+	}
+
+	todo.Completed = !todo.Completed
+
+	context.IndentedJSON(http.StatusOK, todo)
+}
+
 // front *behind mean front is behind's pointer
 // go's return default setting is void don't need to write void or ()
 // if curly bracket is one, it means param
@@ -71,6 +84,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/todos", getTodos)
 	router.GET("/todos/:id", getTodo)
+	router.PATCH("/todos/:id", toggleTodoStatus)
 	router.POST("/todos", addTodo)
 	router.Run("localhost:9090")
 }
