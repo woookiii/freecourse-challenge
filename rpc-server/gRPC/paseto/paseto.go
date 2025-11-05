@@ -19,6 +19,7 @@ func NewPasetoMaker(cfg *config.Config) *PasetoMaker {
 }
 
 func (m *PasetoMaker) CreateNewToken() (string, error) {
+	//pointer receiver is another parameter, yet it gets pointer in front of method call
 	return "", nil
 }
 
