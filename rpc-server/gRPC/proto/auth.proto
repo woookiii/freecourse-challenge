@@ -11,7 +11,7 @@ option go_package = "/auth";
 //https://grpc.io/docs/languages/go/quickstart/
 
 message AuthData {
-  string nam = 1;
+  string name = 1;
   //proto need unique key number value
   string token = 2;
   int64 createDate = 3;

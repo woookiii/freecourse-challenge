@@ -1,9 +1,11 @@
 package client
 
 import (
+	"context"
 	"rpc-server/config"
 	"rpc-server/gRPC/paseto"
 	auth "rpc-server/gRPC/proto"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -40,10 +42,36 @@ func NewGRPCClient(cfg *config.Config) (*GRPCClient, error) {
 //rpc VerifyAuth(VerifyTokenReq) returns (VerifyTokenRes);
 
 // we use type we define at proto
-func (g *GRPCClient) CreateAuth(address string) (*auth.AuthData, error) {
-	return nil, nil
+func (g *GRPCClient) CreateAuth(req *auth.AuthData) (*auth.AuthData, error) {
+	now := time.Now()
+	expiredTime := now.Add(30 * time.Minute)
+
+	a := &auth.AuthData{
+		//when writing go, watch out to write local variable which might conflict with the public construct or import alias
+		Name:       req.Name,
+		CreateDate: now.Unix(),
+		ExpireDate: expiredTime.Unix(),
+	}
+
+	if token, err := g.pasetoMaker.CreateNewToken(a); err != nil {
+		return nil, err
+	} else {
+		a.Token = token
+
+		//Background is empty context non-nil
+		//CreateTokenReq is construct, not func, so we make construct CreateTokenReq and return its pointer
+		if res, err := g.authClient.CreateAuth(context.Background(), &auth.CreateTokenReq{Auth: a}); err != nil {
+			return nil, err
+		} else {
+			return res.Auth, nil
+		}
+	}
 }
 
-func (g *GRPCClient) VerifyAuth(token string) (*auth.VerifyTokenRes, error) {
-	return nil, nil
+func (g *GRPCClient) VerifyAuth(token string) (*auth.Verify, error) {
+	if res, err := g.authClient.VerifyAuth(context.Background(), &auth.VerifyTokenReq{Token: token}); err != nil {
+		return nil, err
+	} else {
+		return res.V, nil
+	}
 }

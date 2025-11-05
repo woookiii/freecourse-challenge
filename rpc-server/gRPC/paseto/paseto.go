@@ -2,6 +2,7 @@ package paseto
 
 import (
 	"rpc-server/config"
+	auth "rpc-server/gRPC/proto"
 
 	"github.com/o1egl/paseto"
 )
@@ -18,7 +19,7 @@ func NewPasetoMaker(cfg *config.Config) *PasetoMaker {
 	}
 }
 
-func (m *PasetoMaker) CreateNewToken() (string, error) {
+func (m *PasetoMaker) CreateNewToken(auth *auth.AuthData) (string, error) {
 	//pointer receiver is another parameter, yet it gets pointer in front of method call
 	return "", nil
 }

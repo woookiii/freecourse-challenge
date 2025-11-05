@@ -72,7 +72,7 @@ func (ResponseType) EnumDescriptor() ([]byte, []int) {
 
 type AuthData struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	Nam   string                 `protobuf:"bytes,1,opt,name=nam,proto3" json:"nam,omitempty"`
+	Name  string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// proto need unique key number value
 	Token         string `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
 	CreateDate    int64  `protobuf:"varint,3,opt,name=createDate,proto3" json:"createDate,omitempty"`
@@ -111,9 +111,9 @@ func (*AuthData) Descriptor() ([]byte, []int) {
 	return file_gRPC_proto_auth_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *AuthData) GetNam() string {
+func (x *AuthData) GetName() string {
 	if x != nil {
-		return x.Nam
+		return x.Name
 	}
 	return ""
 }
@@ -372,9 +372,9 @@ var File_gRPC_proto_auth_proto protoreflect.FileDescriptor
 
 const file_gRPC_proto_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x15gRPC/proto/auth.proto\"r\n" +
-	"\bAuthData\x12\x10\n" +
-	"\x03nam\x18\x01 \x01(\tR\x03nam\x12\x14\n" +
+	"\x15gRPC/proto/auth.proto\"t\n" +
+	"\bAuthData\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
 	"\x05token\x18\x02 \x01(\tR\x05token\x12\x1e\n" +
 	"\n" +
 	"createDate\x18\x03 \x01(\x03R\n" +
