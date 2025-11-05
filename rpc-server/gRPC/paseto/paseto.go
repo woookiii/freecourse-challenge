@@ -21,9 +21,19 @@ func NewPasetoMaker(cfg *config.Config) *PasetoMaker {
 
 func (m *PasetoMaker) CreateNewToken(auth *auth.AuthData) (string, error) {
 	//pointer receiver is another parameter, yet it gets pointer in front of method call
-	return "", nil
+
+	//randomBytes := make([]byte, 16)
+	//rand.Read(randomBytes)
+	return m.Pt.Encrypt(m.Key, auth, nil)
+
+	//auth is payload of token
 }
 
 func (m *PasetoMaker) VerifyToken(token string) error {
+
+	var auth auth.AuthData
+	m.Pt.Decrypt(token, m.Key, &auth, nil)
+	//these two lines will check whether key is same and payload type is same
+
 	return nil
 }
