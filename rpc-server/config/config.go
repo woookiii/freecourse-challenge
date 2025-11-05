@@ -1,8 +1,9 @@
 package config
 
 import (
-	"github.com/naoina/toml"
 	"os"
+
+	"github.com/naoina/toml"
 )
 
 type Config struct {
@@ -10,9 +11,12 @@ type Config struct {
 
 func NewConfig(path string) *Config {
 	c := new(Config)
+	//empty Config type struct is bind to c
 
+	//Open: open the path's toml file
 	if file, err := os.Open(path); err != nil {
 		panic(err)
+		//panic will stop the program when error occur
 	} else {
 		defer file.Close()
 
