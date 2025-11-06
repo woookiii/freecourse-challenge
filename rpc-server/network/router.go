@@ -2,6 +2,7 @@ package network
 
 import (
 	"rpc-server/config"
+	"rpc-server/gRPC/client"
 	"rpc-server/service"
 
 	"github.com/gin-gonic/gin"
@@ -10,13 +11,14 @@ import (
 type Network struct {
 	cfg *config.Config
 
-	service *service.Service
+	service   *service.Service
+	gRPClient *client.GRPCClient
 
 	engin *gin.Engine
 }
 
-func NewNetwork(cfg *config.Config, service *service.Service) (*Network, error) {
-	n := &Network{cfg: cfg, service: service, engin: gin.New()}
+func NewNetwork(cfg *config.Config, service *service.Service, gRPClient *client.GRPCClient) (*Network, error) {
+	n := &Network{cfg: cfg, service: service, engin: gin.New(), gRPClient: gRPClient}
 
 	return n, nil
 }
