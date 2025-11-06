@@ -42,13 +42,13 @@ func NewGRPCClient(cfg *config.Config) (*GRPCClient, error) {
 //rpc VerifyAuth(VerifyTokenReq) returns (VerifyTokenRes);
 
 // we use type we define at proto
-func (g *GRPCClient) CreateAuth(req *auth.AuthData) (*auth.AuthData, error) {
+func (g *GRPCClient) CreateAuth(name string) (*auth.AuthData, error) {
 	now := time.Now()
 	expiredTime := now.Add(30 * time.Minute)
 
 	a := &auth.AuthData{
 		//when writing go, watch out to write local variable which might conflict with the public construct or import alias
-		Name:       req.Name,
+		Name:       name,
 		CreateDate: now.Unix(),
 		ExpireDate: expiredTime.Unix(),
 	}
