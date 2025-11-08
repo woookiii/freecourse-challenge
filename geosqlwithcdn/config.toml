@@ -1,0 +1,15 @@
+[db]
+database = "mysql"
+url = ""
+
+
+[aws]
+key = ""
+secretKey = ""
+region = ""
+bucket = ""
+
+
+[info]
+port = ":8080"
+service = "alpha"
