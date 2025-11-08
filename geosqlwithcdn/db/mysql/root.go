@@ -3,6 +3,8 @@ package mysql
 import (
 	"database/sql"
 	"geosqlwithcdn/config"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type DB struct {
