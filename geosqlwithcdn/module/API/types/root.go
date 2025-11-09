@@ -1,7 +1,7 @@
 package types
 
 type RegisterUserReq struct {
-	UserName    string   `json:"userName" binding:"required"`
+	UserName    string   `json:"username" binding:"required"`
 	Description string   `json:"description"`
 	Hobby       []string `json:"hobby"`
 	Latitude    float64  `json:"latitude" binding:"required,min=-90,max=90"`
@@ -10,7 +10,7 @@ type RegisterUserReq struct {
 }
 
 type AroundUsersReq struct {
-	UserName string `form:"user" binding:"required"`
+	UserName string `form:"username" binding:"required"`
 	Range    int64  `form:"range" binding:"required"`
 	Limit    int64  `form:"limit" binding:"required"`
 }

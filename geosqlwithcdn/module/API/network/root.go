@@ -8,26 +8,26 @@ import (
 )
 
 type Network struct {
-	s    service.ServiceImpl
-	e    *gin.Engine
-	port string
-	cfg  *config.Config
+	service service.ServiceImpl
+	engine  *gin.Engine
+	port    string
+	config  *config.Config
 }
 
 func NewNetwork(
-	cfg *config.Config,
-	s service.ServiceImpl,
+	config *config.Config,
+	service service.ServiceImpl,
 ) *Network {
 	n := &Network{
-		cfg:  cfg,
-		s:    s,
-		e:    gin.New(),
-		port: cfg.Info.Port,
+		config:  config,
+		service: service,
+		engine:  gin.New(),
+		port:    config.Info.Port,
 	}
 
 	return n
 }
 
-func (n *Network) Start() error {
-	return n.e.Run(n.port)
+func (network *Network) Start() error {
+	return network.engine.Run(network.port)
 }

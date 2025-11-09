@@ -26,19 +26,19 @@ type response struct {
 	Result interface{} `json:"result"`
 }
 
-func res(c *gin.Context, s int, res interface{}, data ...string) {
-	c.JSON(s, &response{
-		header: &header{Result: s, Data: strings.Join(data, ",")},
-		Result: res,
+func res(context *gin.Context, statusCode int, result interface{}, data ...string) {
+	context.JSON(statusCode, &response{
+		header: &header{Result: statusCode, Data: strings.Join(data, ",")},
+		Result: result,
 	})
 }
 
-func setGin(e *gin.Engine) {
+func setGin(engine *gin.Engine) {
 	//see requests in console
-	e.Use(gin.Logger())
+	engine.Use(gin.Logger())
 	//if api dying by panic or something like that, restart it
-	e.Use(gin.Recovery())
-	e.Use(cors.New(cors.Config{
+	engine.Use(gin.Recovery())
+	engine.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
 		AllowMethods: []string{
 			"GET",
@@ -74,11 +74,11 @@ func setGin(e *gin.Engine) {
 	}))
 }
 
-func (n *Network) Router(r Router, path string, handler gin.HandlerFunc) {
-	e := n.e
+func (network *Network) Router(router Router, path string, handler gin.HandlerFunc) {
+	e := network.engine
 
 	//switch and case indent is same
-	switch r {
+	switch router {
 	case GET:
 		e.GET(path, handler)
 	case POST:

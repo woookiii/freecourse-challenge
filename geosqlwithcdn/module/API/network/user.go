@@ -8,43 +8,53 @@ import (
 )
 
 type user struct {
-	n *Network
+	network *Network
 }
 
-func userRouter(n *Network) {
-	u := &user{n}
+func userRouter(network *Network) {
+	u := &user{network}
 
-	n.Router(POST, "/register-user", u.RegisterUser)
-	n.Router(POST, "/upload-image", u.UploadImage)
+	network.Router(POST, "/register-user", u.RegisterUser)
+	network.Router(POST, "/upload-image", u.UploadImage)
 
-	n.Router(GET, "/around-users", u.AroundUsers)
+	network.Router(GET, "/around-users", u.AroundUsers)
 
 }
 
-func (u *user) RegisterUser(c *gin.Context) {
+func (user *user) RegisterUser(context *gin.Context) {
 	var req types.RegisterUserReq
 
 	//ShouldBindJSON will get req body from context and bind it to our dto and check the binding did rightly
-	if err := c.ShouldBindJSON(&req); err != nil {
-		res(c, http.StatusUnprocessableEntity, err.Error())
+	if err := context.ShouldBindJSON(&req); err != nil {
+		res(context, http.StatusUnprocessableEntity, err.Error())
+	} else if err = user.network.service.RegisterUser(req); err != nil {
+		res(context, http.StatusInternalServerError, err.Error())
+	} else {
+		res(context, http.StatusOK, "Success")
 	}
 }
 
-func (u *user) UploadImage(c *gin.Context) {
-	name := c.Request.FormValue("userName")
-	file, handler, err := c.Request.FormFile("image")
+func (user *user) UploadImage(context *gin.Context) {
+	name := context.Request.FormValue("username")
+	file, header, err := context.Request.FormFile("image")
 
 	if err != nil || name == "" {
-		res(c, http.StatusUnprocessableEntity, err.Error())
+		res(context, http.StatusUnprocessableEntity, err.Error())
+	} else if err = user.network.service.UploadFile(name, header, file); err != nil {
+		res(context, http.StatusInternalServerError, err.Error())
 	} else {
-		//TODO via service, communicate with aws
+		res(context, http.StatusOK, "Success")
 	}
 }
 
-func (u *user) AroundUsers(c *gin.Context) {
+func (user *user) AroundUsers(context *gin.Context) {
 	var req types.AroundUsersReq
 
-	if err := c.ShouldBindQuery(&req); err != nil {
-		res(c, http.StatusUnprocessableEntity, err.Error())
+	if err := context.ShouldBindQuery(&req); err != nil {
+		res(context, http.StatusUnprocessableEntity, err.Error())
+	} else if result, err := user.network.service.FindAroundUsers(req.UserName, req.Range, req.Limit); err != nil {
+		res(context, http.StatusInternalServerError, err.Error())
+	} else {
+		res(context, http.StatusOK, result)
 	}
 }
