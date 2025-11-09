@@ -25,7 +25,7 @@ func main() {
 		fx.Provide(func() *db.DBRoot { return db.RootDB(cfg) }),
 		fx.Provide(func() *aws.Aws { return aws.NewAws(cfg) }),
 
-		//2. provide target, can add more target if I need
+		//2. provide target constructor, can add more target if I need
 		fx.Provide(API.NewAPI),
 
 		//3. inject config dependencies

@@ -4,6 +4,8 @@ import (
 	"geosqlwithcdn/aws"
 	"geosqlwithcdn/config"
 	"geosqlwithcdn/db"
+	"geosqlwithcdn/module/API/network"
+	"geosqlwithcdn/module/API/service"
 )
 
 type API struct {
@@ -18,6 +20,8 @@ func NewAPI(
 	aws *aws.Aws,
 ) *API {
 	api := &API{cfg, db, aws}
+
+	s := service.NewService(cfg, db, aws)
 
 	return api
 }
