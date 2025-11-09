@@ -77,6 +77,7 @@ func setGin(e *gin.Engine) {
 func (n *Network) Router(r Router, path string, handler gin.HandlerFunc) {
 	e := n.e
 
+	//switch and case indent is same
 	switch r {
 	case GET:
 		e.GET(path, handler)
