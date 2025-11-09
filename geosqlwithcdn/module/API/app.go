@@ -23,5 +23,11 @@ func NewAPI(
 
 	s := service.NewService(cfg, db, aws)
 
+	n := network.NewNetwork(cfg, s)
+
+	go func() {
+		n.Start()
+	}()
+
 	return api
 }
