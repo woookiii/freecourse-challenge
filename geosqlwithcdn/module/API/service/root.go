@@ -5,6 +5,7 @@ import (
 	"geosqlwithcdn/config"
 	"geosqlwithcdn/db"
 	"geosqlwithcdn/module/API/types"
+	"log"
 	"mime/multipart"
 )
 
@@ -32,6 +33,7 @@ func NewService(
 }
 
 func (service *service) RegisterUser(req types.RegisterUserReq) error {
+
 	return nil
 }
 
