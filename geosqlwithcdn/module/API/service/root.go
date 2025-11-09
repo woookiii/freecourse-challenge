@@ -33,7 +33,24 @@ func NewService(
 }
 
 func (service *service) RegisterUser(req types.RegisterUserReq) error {
+	retryCount := 0
 
+createAgain:
+	if err := service.db.MySQL.RegisterUser(
+		req.UserName,
+		req.Description,
+		req.Hobby,
+		req.Latitude,
+		req.Longitude,
+	); err != nil {
+		retryCount++
+
+		if retryCount < 3 {
+			goto createAgain
+		} else {
+			log.Println("Failed to create user", "user", req.UserName, "err", err.Error())
+		}
+	}
 	return nil
 }
 
