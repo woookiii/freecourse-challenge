@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"geosqlwithcdn/aws"
 	"geosqlwithcdn/config"
-	"geosqlwithcdn/db"
 	"geosqlwithcdn/module/API"
+	"geosqlwithcdn/module/API/repository"
 
 	"go.uber.org/fx"
 )
@@ -22,7 +22,6 @@ func main() {
 	fx.New(
 		//1. provide config by anonymous functions work for fx
 		fx.Provide(func() *config.Config { return cfg }),
-		fx.Provide(func() *db.DBRoot { return db.RootDB(cfg) }),
 		fx.Provide(func() *aws.Aws { return aws.NewAws(cfg) }),
 
 		//2. provide target constructor, can add more target if I need

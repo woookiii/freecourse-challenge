@@ -11,7 +11,6 @@ type Network struct {
 	service service.ServiceImpl
 	engine  *gin.Engine
 	port    string
-	config  *config.Config
 }
 
 func NewNetwork(
@@ -19,7 +18,6 @@ func NewNetwork(
 	service service.ServiceImpl,
 ) *Network {
 	n := &Network{
-		config:  config,
 		service: service,
 		engine:  gin.New(),
 		port:    config.Info.Port,

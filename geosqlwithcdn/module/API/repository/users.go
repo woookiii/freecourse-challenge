@@ -1,14 +1,15 @@
-package mysql
+package repository
 
 import (
 	"encoding/json"
-	. "geosqlwithcdn/db/mysql/query"
+	. "geosqlwithcdn/module/API/repository/mysql/query"
+	"geosqlwithcdn/module/API/repository/mysql/types"
 	//static import
 	"log"
 )
 
-func (d *DB) RegisterUser(user string, description string, hobby []string, latitude float64, longitude float64) error {
-	if tx, err := d.db.Begin(); err != nil {
+func (repository *Repository) RegisterUser(user string, description string, hobby []string, latitude, longitude float64) error {
+	if tx, err := repository.db.Begin(); err != nil {
 		return err
 	} else if json, err := json.Marshal(hobby); err != nil {
 		return err
@@ -28,7 +29,17 @@ func (d *DB) RegisterUser(user string, description string, hobby []string, latit
 			count, _ := result.RowsAffected()
 			log.Println("Success to insert user location", "count", count)
 		}
+
+		tx.Commit()
 	}
 
 	return nil
+}
+
+func (repository *Repository) GetUser(userName string) (*types.User, error) {
+	return nil, nil
+}
+
+func (repository *Repository) AroundUser(userName string, latitude, longitude float64, searchRange, limit int64) ([]*types.User, error) {
+	return nil, nil
 }
