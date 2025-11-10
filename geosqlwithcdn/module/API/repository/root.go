@@ -2,6 +2,8 @@ package repository
 
 import (
 	"database/sql"
+	"encoding/json"
+	"errors"
 	"geosqlwithcdn/config"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -26,4 +28,18 @@ func NewRepository(cfg *config.Config) *Repository {
 	}
 
 	return r
+}
+
+func unMarshalToField(field []interface{}, to ...interface{}) error {
+	if len(field) != len(to) {
+		return errors.New("Field Length is not match")
+	} else {
+		for i, f := range field {
+			if err := json.Unmarshal(f.([]byte), to[i]); err != nil {
+				return err
+			}
+		}
+
+		return nil
+	}
 }

@@ -6,7 +6,6 @@ import (
 	"geosqlwithcdn/aws"
 	"geosqlwithcdn/config"
 	"geosqlwithcdn/module/API"
-	"geosqlwithcdn/module/API/repository"
 
 	"go.uber.org/fx"
 )

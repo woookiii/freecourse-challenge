@@ -37,9 +37,72 @@ func (repository *Repository) RegisterUser(user string, description string, hobb
 }
 
 func (repository *Repository) GetUser(userName string) (*types.User, error) {
-	return nil, nil
+	var res types.User
+
+	var image interface{}
+	var hobby interface{}
+
+	if err := repository.db.QueryRow(GetUserByNone, userName).Scan(
+		&res.UserName,
+		&image,
+		&res.Description,
+		&hobby,
+		&res.Latitude,
+		&res.Longitude,
+	); err != nil {
+		return nil, err
+	} else if err = unMarshalToField(
+		[]interface{}{image, hobby},
+		&res.Image, &res.Hobby,
+	); err != nil {
+		return nil, err
+	} else {
+		return &res, nil
+	}
+
 }
 
 func (repository *Repository) AroundUser(userName string, latitude, longitude float64, searchRange, limit int64) ([]*types.User, error) {
-	return nil, nil
+	if rows, err := repository.db.Query(
+		GetAroundUsers,
+		userName,
+		latitude,
+		longitude,
+		searchRange,
+		latitude,
+		longitude,
+		limit,
+	); err != nil {
+		return nil, err
+	} else {
+		defer rows.Close()
+
+		var result []*types.User
+
+		for rows.Next() {
+			var res types.User
+
+			var image interface{}
+			var hobby interface{}
+
+			if err = rows.Scan(
+				&res.UserName,
+				&image,
+				&res.Description,
+				&hobby,
+				&res.Latitude,
+				&res.Longitude,
+			); err != nil {
+				return nil, err
+			} else if err = unMarshalToField(
+				[]interface{}{image, hobby},
+				&res.Image, &res.Hobby,
+			); err != nil {
+				return nil, err
+			} else {
+				result = append(result, &res)
+			}
+		}
+		return result, nil
+	}
 }
