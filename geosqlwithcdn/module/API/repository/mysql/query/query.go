@@ -13,6 +13,7 @@ const (
 	GetUserByNone = "" +
 		"SELECT " +
 		"u.username, u.image, u.description, u.hobby, " +
+		"ul.latitude, ul.longitude " +
 		"FROM user AS u JOIN user_location AS ul " +
 		"ON u.username = ul.username WHERE u.username = ?;"
 
@@ -21,6 +22,6 @@ const (
 		"u.username, u.image, u.description, u.hobby, " +
 		"ul.latitude, ul.longitude " +
 		"FROM user AS u JOIN user_location AS ul ON u.username = ul.username " +
-		"WHERE u.username != ? AND ST_Distance_Sphere(POINT(?, ?), POINT(ul.latitude, ul.longitude)) <= ? " +
-		"ORDER BY ST_Distance_Sphere(POINT(?, ?), POINT(ul.latitude, ul.longitude)) LIMIT ?;"
+		"WHERE u.username != ? AND ST_Distance_Sphere(POINT(?, ?), POINT(ul.longitude, ul.latitude)) <= ? " +
+		"ORDER BY ST_Distance_Sphere(POINT(?, ?), POINT(ul.longitude, ul.latitude)) LIMIT ?;"
 )

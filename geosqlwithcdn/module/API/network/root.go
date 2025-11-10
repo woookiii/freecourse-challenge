@@ -23,6 +23,9 @@ func NewNetwork(
 		port:    config.Info.Port,
 	}
 
+	setGin(n.engine)
+	userRouter(n)
+
 	return n
 }
 

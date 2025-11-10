@@ -30,12 +30,12 @@ func NewRepository(cfg *config.Config) *Repository {
 	return r
 }
 
-func unMarshalToField(field []interface{}, to ...interface{}) error {
-	if len(field) != len(to) {
+func unmarshalToFields(fields []interface{}, to ...interface{}) error {
+	if len(fields) != len(to) {
 		return errors.New("Field Length is not match")
 	} else {
-		for i, f := range field {
-			if err := json.Unmarshal(f.([]byte), to[i]); err != nil {
+		for i, field := range fields {
+			if err := json.Unmarshal(field.([]byte), to[i]); err != nil {
 				return err
 			}
 		}

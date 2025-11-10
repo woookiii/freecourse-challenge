@@ -22,7 +22,7 @@ func (repository *Repository) RegisterUser(user string, description string, hobb
 			log.Println("Success to insert user", "count", count)
 		}
 
-		if result, err := tx.Exec(InsertIgnoreUserLocation, user, latitude, longitude, latitude, longitude); err != nil {
+		if result, err := tx.Exec(InsertIgnoreUserLocation, user, latitude, longitude, longitude, latitude); err != nil {
 			tx.Rollback()
 			return err
 		} else {
@@ -51,7 +51,7 @@ func (repository *Repository) GetUser(userName string) (*types.User, error) {
 		&res.Longitude,
 	); err != nil {
 		return nil, err
-	} else if err = unMarshalToField(
+	} else if err = unmarshalToFields(
 		[]interface{}{image, hobby},
 		&res.Image, &res.Hobby,
 	); err != nil {
@@ -66,11 +66,11 @@ func (repository *Repository) AroundUser(userName string, latitude, longitude fl
 	if rows, err := repository.db.Query(
 		GetAroundUsers,
 		userName,
-		latitude,
 		longitude,
+		latitude,
 		searchRange,
-		latitude,
 		longitude,
+		latitude,
 		limit,
 	); err != nil {
 		return nil, err
@@ -94,7 +94,7 @@ func (repository *Repository) AroundUser(userName string, latitude, longitude fl
 				&res.Longitude,
 			); err != nil {
 				return nil, err
-			} else if err = unMarshalToField(
+			} else if err = unmarshalToFields(
 				[]interface{}{image, hobby},
 				&res.Image, &res.Hobby,
 			); err != nil {
