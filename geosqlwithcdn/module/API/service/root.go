@@ -13,6 +13,7 @@ import (
 	"mime/multipart"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type service struct {
@@ -90,6 +91,7 @@ func (service *service) getUser(userName string) (*User, error) {
 }
 
 func (service *service) UploadFile(userName string, header *multipart.FileHeader, file multipart.File) error {
+
 	fileName := header.Filename
 	fileExt := filepath.Ext(fileName)
 
@@ -99,6 +101,7 @@ func (service *service) UploadFile(userName string, header *multipart.FileHeader
 		path := "./upload-image"
 		filePath := fmt.Sprintf("%s/%s", path, fileName)
 
+		//create return readable and also writable file(which is new or truncated)
 		if out, err := os.Create(filePath); err != nil {
 			return err
 		} else {
@@ -106,11 +109,33 @@ func (service *service) UploadFile(userName string, header *multipart.FileHeader
 
 			if _, err := io.Copy(out, file); err != nil {
 				return err
+			} else if service.putFileToS3(
+				fileName,
+				userName,
+				strings.TrimPrefix(fileExt, "."),
+				filePath,
+			); err != nil {
+				return err
+			} else {
+				return nil
 			}
 		}
 	}
+}
 
-	service.aws.PutFileToS3("", "", nil)
+func (s *service) putFileToS3(fileName, userName, extension, path string) error {
+	key := userName + "/" + fileName
 
-	return nil
+	//open return read-only file
+	if f, err := os.Open(path); err != nil {
+		return err
+	} else {
+		defer f.Close()
+
+		if err = s.aws.PutFileToS3(key, extension, f); err != nil {
+			return err
+		} else {
+			return nil
+		}
+	}
 }
