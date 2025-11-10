@@ -1,7 +1,9 @@
 package aws
 
 import (
+	"fmt"
 	"geosqlwithcdn/config"
+	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -31,4 +33,17 @@ func NewAws(cfg *config.Config) *Aws {
 		a.S3 = s3.New(a.session)
 	}
 	return a
+}
+
+func (a *Aws) PutFileToS3(key string, tag string, file *os.File) error {
+	input := &s3.PutObjectInput{
+		Bucket:      aws.String(a.Bucket),
+		Key:         aws.String(key),
+		Body:        file,
+		ContentType: aws.String(fmt.Sprintf("%s/%s", "image", tag)),
+		ACL:         aws.String("public-read"),
+	}
+	_, err := a.S3.PutObject(input)
+
+	return err
 }
