@@ -4,10 +4,10 @@ url = "root:1234@tcp(localhost:3306)/meeting"
 
 
 [aws]
-key = ""
-secretKey = ""
-region = ""
-bucket = ""
+key = "AKIAYHH5KL3223URF3UK"
+secretKey = "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"
+region = "ap-northeast-2"
+bucket = "meeting-image-1243211241"
 
 
 [info]
