@@ -2,6 +2,7 @@ package network
 
 import (
 	"net/http"
+	"qrauthscrapcron/types"
 
 	"github.com/gin-gonic/gin"
 )
@@ -11,16 +12,45 @@ type admin struct {
 }
 
 func (admin *admin) add(context *gin.Context) {
-	res(context, http.StatusOK, "dshjkfdksdkjsfds")
+	req := types.AddReq{}
+
+	//ShouldBindJSON not only return error when binding is not correct, but also bind json to req
+	if err := context.ShouldBindJSON(&req); err != nil {
+		res(context, http.StatusUnprocessableEntity, nil, err.Error())
+	} else {
+		res(context, http.StatusOK, "dshjkfdksdkjsfds")
+
+	}
+
 }
 
 func (admin *admin) update(context *gin.Context) {
+	req := types.UpdateReq{}
+
+	if err := context.ShouldBindJSON(&req); err != nil {
+		res(context, http.StatusUnprocessableEntity, nil, err.Error())
+
+	}
+
+}
+
+func (admin *admin) view(context *gin.Context) {
+	req := types.ViewReq{}
+
+	if err := context.ShouldBindJSON(&req); err != nil {
+		res(context, http.StatusUnprocessableEntity, nil, err.Error())
+	}
 }
 
 func (admin *admin) viewAll(context *gin.Context) {
 }
 
 func (admin *admin) delete(context *gin.Context) {
+	req := types.DeleteReq{}
+
+	if err := context.ShouldBindJSON(&req); err != nil {
+		res(context, http.StatusUnprocessableEntity, nil, err.Error())
+	}
 }
 
 func newAdmin(network *Network) {
