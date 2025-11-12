@@ -13,4 +13,7 @@ func main() {
 	flag.Parse()
 
 	c := config.NewConfig(*pathFlag)
+	a := app.NewApp(c)
+	go a.Wait()
+	a.Run()
 }
