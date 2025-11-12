@@ -28,6 +28,8 @@ func NewNetwork(
 		engin:         gin.New(),
 	}
 
+	newAdmin(n)
+	
 	return n
 }
 
