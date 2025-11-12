@@ -23,17 +23,21 @@ type App struct {
 	stop chan struct{}
 }
 
-func NewApp(cfg *config.Config) *App {
+func NewApp(config *config.Config) *App {
 	a := &App{
-		config: cfg,
+		config: config,
 		stop:   make(chan struct{}),
 	}
 
-	channel := make(chan os.Signal, 1)
-	signal.Notify(channel, syscall.SIGINT)
+	a.network = network.NewNetwork(config, a.service, a.authenticator)
+
+	c := make(chan os.Signal, 1)
+
+	//this listen user input of ctrl c
+	signal.Notify(c, syscall.SIGINT)
 
 	go func() {
-		<-channel
+		<-c
 		a.exit()
 	}()
 
@@ -50,4 +54,5 @@ func (a *App) exit() {
 }
 
 func (a *App) Run() {
+	a.network.Run()
 }
