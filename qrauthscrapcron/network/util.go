@@ -1,6 +1,7 @@
 package network
 
 import (
+	"net/http"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -44,5 +45,32 @@ func (n *Network) register(path string, t API_REQUEST, h ...gin.HandlerFunc) gin
 		return n.engin.DELETE(path, h...)
 	default:
 		return nil
+	}
+}
+
+func (n *Network) verifyAuth() gin.HandlerFunc {
+	return func(context *gin.Context) {
+		if secret := getSecretByAuthorization(context); secret == "" {
+			res(context, http.StatusUnauthorized, nil, "auth secret need")
+		} else if valid, err := n.authenticator.VerifySecret(secret); err != nil {
+			res(context, http.StatusUnauthorized, nil, err.Error())
+			context.Abort()
+		} else if !valid {
+			res(context, http.StatusUnauthorized, nil, "not valid otp")
+			context.Abort()
+		} else {
+			context.Next()
+		}
+	}
+}
+
+func getSecretByAuthorization(context *gin.Context) string {
+	auth := context.Request.Header.Get("Authorization")
+	authSliced := strings.Split(auth, " ")
+
+	if len(authSliced) > 1 {
+		return authSliced[1]
+	} else {
+		return ""
 	}
 }

@@ -1,7 +1,6 @@
 package authenticator
 
 import (
-	"encoding/base32"
 	"net/url"
 	"os"
 	"qrauthscrapcron/config"
@@ -11,42 +10,37 @@ import (
 )
 
 type authenticator struct {
-	config       *config.Config
-	secretBase32 string
+	Secret   string
+	Account  string
+	Issuer   string
+	FileName string
 }
 
 type AuthenticatorImpl interface {
+	VerifySecret(secret string) (bool, error)
 }
 
 func NewAuthenticator(config *config.Config) (AuthenticatorImpl, error) {
-	a := &authenticator{config: config}
-
-	authCfg := config.Authenticator
-
-	var secret []byte
-
-	for _, char := range authCfg.Secret {
-		secret = append(secret, byte(char))
+	a := &authenticator{
+		Secret:   config.Authenticator.Secret,
+		Account:  config.Authenticator.Account,
+		Issuer:   config.Authenticator.Issuer,
+		FileName: config.Authenticator.FileName,
 	}
-
-	a.secretBase32 = base32.StdEncoding.EncodeToString(secret)
-	account := authCfg.Account
-	issuer := authCfg.Issuer
 
 	if URL, err := url.Parse("otpauth://totp"); err != nil {
 		return nil, err
 	} else {
-		URL.Path += "/" + url.PathEscape(issuer) + ":" + url.PathEscape(account)
+		URL.Path += "/" + url.PathEscape(a.Account)
 
 		params := url.Values{}
-		params.Add("secret", a.secretBase32)
-		params.Add("issuer", issuer)
-
-		//TODO add param to URL
+		params.Add("secret", a.Secret)
+		params.Add("issuer", a.Issuer)
+		URL.RawQuery = params.Encode()
 
 		if code, err := qr.Encode(URL.String(), qr.Q); err != nil {
 			return nil, err
-		} else if err = os.WriteFile(authCfg.FileName, code.PNG(), 0600); err != nil {
+		} else if err = os.WriteFile(a.FileName, code.PNG(), 0600); err != nil {
 			return nil, err
 		} else {
 			return a, nil
@@ -55,13 +49,13 @@ func NewAuthenticator(config *config.Config) (AuthenticatorImpl, error) {
 
 }
 
-func (a *authenticator) VerifySecret(secret string) (bool, error) {
+func (a *authenticator) VerifySecret(password string) (bool, error) {
 	otp := &dgoogauth.OTPConfig{
-		Secret:     a.secretBase32,
+		Secret:     a.Secret,
 		WindowSize: 1,
 	}
 
-	if valid, err := otp.Authenticate(secret); err != nil {
+	if valid, err := otp.Authenticate(password); err != nil {
 		return false, err
 	} else if !valid {
 		return false, nil

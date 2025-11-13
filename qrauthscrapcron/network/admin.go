@@ -58,7 +58,7 @@ func newAdmin(network *Network) {
 
 	basePath := "/admin"
 
-	network.register(basePath+"/add", POST, a.add)
+	network.register(basePath+"/add", POST, network.verifyAuth(), a.add)
 	network.register(basePath+"/update", PUT, a.update)
 	network.register(basePath+"/view", GET, a.viewAll)
 	network.register(basePath+"/delete", DELETE, a.delete)

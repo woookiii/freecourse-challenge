@@ -2,9 +2,9 @@
 port  = ":8080"
 
 [authenticator]
-secret ="hello!!!"
-account = ""
+secret ="JBSWY3DPEHPK3PXP"
 issuer = "test"
+account = "man"
 fileName = "qr.PNG"
 
 [db]
