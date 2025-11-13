@@ -29,7 +29,10 @@ func NewApp(config *config.Config) *App {
 		stop:   make(chan struct{}),
 	}
 
-	a.authenticator = authenticator.NewAuthenticator(config)
+	var err error
+	if a.authenticator, err = authenticator.NewAuthenticator(config); err != nil {
+		panic(err)
+	}
 	a.network = network.NewNetwork(config, a.service, a.authenticator)
 
 	c := make(chan os.Signal, 1)
