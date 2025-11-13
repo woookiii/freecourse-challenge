@@ -34,6 +34,8 @@ func NewApp(config *config.Config) *App {
 		panic(err)
 	} else if a.repository, err = repository.NewRepository(config); err != nil {
 		panic(err)
+	} else if a.service, err = service.NewService(a.repository); err != nil {
+		panic(err)
 	}
 
 	a.network = network.NewNetwork(config, a.service, a.authenticator)

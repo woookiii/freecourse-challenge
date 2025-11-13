@@ -5,6 +5,8 @@ import (
 	"qrauthscrapcron/config"
 	"qrauthscrapcron/types/schema"
 	"strings"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 type repository struct {
@@ -46,6 +48,7 @@ func (r *repository) View(url string) (*schema.Admin, error) {
 		&s.ID,
 		&s.URL,
 		&s.CardSelector,
+		&s.InnerSelector,
 		&s.Tag,
 		&s.CreatedAt,
 		&s.UpdatedAt,
@@ -69,6 +72,7 @@ func (r *repository) ViewAll() ([]*schema.Admin, error) {
 				&s.ID,
 				&s.URL,
 				&s.CardSelector,
+				&s.InnerSelector,
 				&s.Tag,
 				&s.CreatedAt,
 				&s.UpdatedAt,
@@ -97,7 +101,7 @@ func (r *repository) Update(url, cardSelector, innerSelector string, tag []strin
 }
 
 func (r *repository) Delete(url string) error {
-	if _, err := r.db.Exec("DELETE Scrapping.Admin WHERE url = ?", url); err != nil {
+	if _, err := r.db.Exec("DELETE FROM Scrapping.Admin WHERE url = ?", url); err != nil {
 		return err
 	}
 	return nil

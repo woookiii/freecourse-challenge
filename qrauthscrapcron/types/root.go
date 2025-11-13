@@ -8,7 +8,7 @@ type AddReq struct {
 }
 
 type ViewReq struct {
-	URL string `form:"url" binding:"required"`
+	URL string `json:"url" binding:"required"`
 }
 
 type UpdateReq struct {
@@ -19,5 +19,5 @@ type UpdateReq struct {
 }
 
 type DeleteReq struct {
-	URL string `form:"url" binding:"required"`
+	URL string `json:"url" binding:"required"`
 }
