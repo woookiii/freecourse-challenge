@@ -6,6 +6,7 @@ import (
 	"os"
 	"qrauthscrapcron/config"
 
+	"github.com/dgryski/dgoogauth"
 	"rsc.io/qr"
 )
 
@@ -55,5 +56,16 @@ func NewAuthenticator(config *config.Config) (AuthenticatorImpl, error) {
 }
 
 func (a *authenticator) VerifySecret(secret string) (bool, error) {
-	return false, nil
+	otp := &dgoogauth.OTPConfig{
+		Secret:     a.secretBase32,
+		WindowSize: 1,
+	}
+
+	if valid, err := otp.Authenticate(secret); err != nil {
+		return false, err
+	} else if !valid {
+		return false, nil
+	} else {
+		return true, nil
+	}
 }
