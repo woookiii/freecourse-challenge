@@ -32,7 +32,10 @@ func NewApp(config *config.Config) *App {
 	var err error
 	if a.authenticator, err = authenticator.NewAuthenticator(config); err != nil {
 		panic(err)
+	} else if a.repository, err = repository.NewRepository(config); err != nil {
+		panic(err)
 	}
+
 	a.network = network.NewNetwork(config, a.service, a.authenticator)
 
 	c := make(chan os.Signal, 1)

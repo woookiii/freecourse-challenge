@@ -51,8 +51,9 @@ func NewAuthenticator(config *config.Config) (AuthenticatorImpl, error) {
 
 func (a *authenticator) VerifySecret(password string) (bool, error) {
 	otp := &dgoogauth.OTPConfig{
-		Secret:     a.Secret,
-		WindowSize: 1,
+		Secret: a.Secret,
+		//if window size is 2, one passed password can be approved
+		WindowSize: 2,
 	}
 
 	if valid, err := otp.Authenticate(password); err != nil {
