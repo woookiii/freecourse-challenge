@@ -28,6 +28,14 @@ public class UserController {
 
     }
 
+    @GetMapping
+    public Page<UserDocument> findUsers() {
+        return userDocumentRepository.findAll(PageRequest.of(0, 10));
+    }
 
+    @GetMapping("/{id}")
+    public UserDocument findUserById(@PathVariable String id) {
+        return userDocumentRepository.findById(id).orElseThrow(() -> new RuntimeException("user not exist"));
+    }
 
 }
