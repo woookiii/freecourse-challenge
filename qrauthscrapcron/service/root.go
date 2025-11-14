@@ -8,6 +8,7 @@ import (
 
 type service struct {
 	repository repository.RepositoryImpl
+	cronJob    *cronJob
 }
 
 type ServiceImpl interface {
@@ -19,7 +20,10 @@ type ServiceImpl interface {
 }
 
 func NewService(repository repository.RepositoryImpl) (ServiceImpl, error) {
-	s := &service{repository: repository}
+	s := &service{
+		repository: repository,
+		cronJob:    NewCronJob(repository),
+	}
 
 	return s, nil
 }
