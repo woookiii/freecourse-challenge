@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.dto.UserCreateRequestDto;
+import com.example.demo.dto.UserUpdateRequestDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -38,4 +39,22 @@ public class UserController {
         return userDocumentRepository.findById(id).orElseThrow(() -> new RuntimeException("user not exist"));
     }
 
+    @PutMapping("/{id}")
+    public UserDocument updateUser(@PathVariable String id, @RequestBody UserUpdateRequestDto userUpdateRequestDto) {
+        UserDocument existingUser = userDocumentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("user not exist"));
+        existingUser.setAge(userUpdateRequestDto.getAge());
+        existingUser.setName(userUpdateRequestDto.getName());
+        existingUser.setActive(userUpdateRequestDto.getActive());
+
+        return userDocumentRepository.save(existingUser);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable String id) {
+        UserDocument user = userDocumentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("user not exist"));
+
+        userDocumentRepository.delete(user);
+    }
 }
