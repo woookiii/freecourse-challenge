@@ -76,7 +76,7 @@ public class ProductService {
                 .withPageable(PageRequest.of(0, 5))
                 .build();
 
-        SearchHits<ProductDocument> searchHits = this.elasticsearchOperations.search(nativeQuery, ProductDocument.class);//GET /products/_search {...}
+        SearchHits<ProductDocument> searchHits = elasticsearchOperations.search(nativeQuery, ProductDocument.class);//GET /products/_search {...}
         return searchHits.getSearchHits().stream()
                 .map(hit -> {
                     ProductDocument productDocument = hit.getContent();
