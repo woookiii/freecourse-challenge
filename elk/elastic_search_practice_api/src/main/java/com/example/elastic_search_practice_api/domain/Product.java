@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 
 
-@Getter
 @Entity
 @Table(name = "products")
 public class Product {
@@ -37,5 +36,29 @@ public class Product {
         this.price = price;
         this.rating = rating;
         this.category = category;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public String getCategory() {
+        return category;
     }
 }
