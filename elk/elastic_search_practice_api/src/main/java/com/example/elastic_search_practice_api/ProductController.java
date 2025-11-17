@@ -4,6 +4,7 @@ package com.example.elastic_search_practice_api;
 import java.util.List;
 
 import com.example.elastic_search_practice_api.domain.Product;
+import com.example.elastic_search_practice_api.domain.ProductDocument;
 import com.example.elastic_search_practice_api.dto.CreateProductRequestDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,5 +49,25 @@ public class ProductController {
     public ResponseEntity<?> getSuggestions(@RequestParam String query) {
         var suggestions = productService.getSuggestions(query);
         return ResponseEntity.ok(suggestions);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchProducts(
+            @RequestParam String query,
+            @RequestParam(required = false) String category,
+            @RequestParam(defaultValue = "0") double minPrice,
+            @RequestParam(defaultValue = "10000000") double maxPrice,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        var products = productService.searchProducts(
+                query,
+                category,
+                minPrice,
+                maxPrice,
+                page,
+                size
+        );
+        return ResponseEntity.ok(products);
     }
 }
