@@ -1,0 +1,7 @@
+[db]
+database = "mysql"
+url = "root:1234@tcp(localhost:3306)/master"
+
+[info]
+port = ":9090"
+service = "alpha"
