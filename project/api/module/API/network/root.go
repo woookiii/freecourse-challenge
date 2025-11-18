@@ -25,6 +25,6 @@ func NewNetwork(cfg *config.Config, s *service.Service) *Network {
 	return n
 }
 
-func (network *Network) Start() error {
-	return network.engine.Run(network.port)
+func (n *Network) Start() error {
+	return n.engine.Run(n.port)
 }

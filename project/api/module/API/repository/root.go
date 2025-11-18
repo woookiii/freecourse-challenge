@@ -12,6 +12,10 @@ type Repository struct {
 	db     *sql.DB
 }
 
+func (r Repository) CreateMember(name string, email string, password string) error {
+
+}
+
 func NewRepository(cfg *config.Config) *Repository {
 	r := &Repository{config: cfg}
 

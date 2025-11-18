@@ -38,8 +38,8 @@ func setGin(engine *gin.Engine) {
 	//TODO: cors if needed
 }
 
-func (network *Network) Router(httpMethod HTTPMethod, path string, handler gin.HandlerFunc) {
-	e := network.engine
+func (n *Network) Router(httpMethod HTTPMethod, path string, handler gin.HandlerFunc) {
+	e := n.engine
 
 	switch httpMethod {
 	case GET:
