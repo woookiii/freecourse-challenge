@@ -21,6 +21,7 @@ func NewNetwork(cfg *config.Config, s *service.Service) *Network {
 	}
 
 	setGin(n.engine)
+	memberRouter(n)
 
 	return n
 }

@@ -1,7 +1,7 @@
 package network
 
 import (
-	"api/module/API/types"
+	"api/module/API/types/dto"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -18,11 +18,11 @@ func memberRouter(network *Network) {
 }
 
 func (member *member) create(ctx *gin.Context) {
-	var req types.MemberSaveReqDto
+	var req dto.MemberSaveReq
 
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		res(ctx, http.StatusUnprocessableEntity, err.Error())
-	} else if err = member.network.service.CreateMember(req); err != nil {
+	} else if err = member.network.service.CreateMember(&req); err != nil {
 		res(ctx, http.StatusInternalServerError, err.Error())
 	}
 	res(ctx, http.StatusOK, "Success create member")

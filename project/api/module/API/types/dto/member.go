@@ -1,6 +1,6 @@
-package types
+package dto
 
-type MemberSaveReqDto struct {
+type MemberSaveReq struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`

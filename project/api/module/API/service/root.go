@@ -2,7 +2,7 @@ package service
 
 import (
 	"api/module/API/repository"
-	"api/module/API/types"
+	"api/module/API/types/dto"
 	"log"
 
 	"golang.org/x/crypto/bcrypt"
@@ -12,8 +12,11 @@ type Service struct {
 	repository *repository.Repository
 }
 
-func (s *Service) CreateMember(req types.MemberSaveReqDto) error {
-	if hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost); err != nil {
+func (s *Service) CreateMember(req *dto.MemberSaveReq) error {
+	if member, _ := s.repository.FindMemberByEmail(req.Email); member != nil {
+		log.Println("This email already exist")
+		return nil
+	} else if hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost); err != nil {
 		return err
 	} else {
 		retryCount := 0
