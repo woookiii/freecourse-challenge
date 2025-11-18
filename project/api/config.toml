@@ -1,6 +1,6 @@
 [db]
-database = "mysql"
-url = "root:1234@tcp(localhost:3306)/master"
+database = "postgres"
+url = "postgres://root:1234@localhost:5432/litdb?sslmode=disable"
 
 [info]
 port = ":9090"

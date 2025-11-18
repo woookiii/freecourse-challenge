@@ -19,6 +19,7 @@ func (n *Network) createMember(ctx *gin.Context) {
 		res(ctx, http.StatusUnprocessableEntity, err.Error())
 	} else if err = n.service.CreateMember(&req); err != nil {
 		res(ctx, http.StatusInternalServerError, err.Error())
+	} else {
+		res(ctx, http.StatusOK, "Success create member")
 	}
-	res(ctx, http.StatusOK, "Success create member")
 }

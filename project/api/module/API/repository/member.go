@@ -11,24 +11,24 @@ import (
 func (r Repository) CreateMember(name string, email string, password string) error {
 	if tx, err := r.db.Begin(); err != nil {
 		return err
+	} else if result, err := tx.Exec(
+		"INSERT INTO member (id, name, email, password, role, created_time, updated_time, deleted_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
+		uuid.New().String(),
+		name,
+		email,
+		password,
+		"USER",
+		time.Now(),
+		nil,
+		nil,
+	); err != nil {
+		tx.Rollback()
+		log.Println("failed to insert member", err.Error())
+		return err
 	} else {
-		id := uuid.New().String()
-		if result, err := tx.Exec(
-			"INSERT INTO member (id, name, email, password, role, created_time) VALUES (?,?,?,?,?,?);",
-			id,
-			name,
-			email,
-			password,
-			"USER",
-			time.Now(),
-		); err != nil {
-			tx.Rollback()
-			return err
-		} else {
-			count, _ := result.RowsAffected()
-			log.Println("Success to insert member", "count", count)
-		}
+		count, _ := result.RowsAffected()
 		tx.Commit()
+		log.Println("Success to insert member", "count", count)
 	}
 
 	return nil
@@ -51,6 +51,7 @@ func (r Repository) FindMemberByEmail(email string) (*entity.Member, error) {
 		&member.DeletedTime,
 	); err != nil {
 		return nil, err
+	} else {
+		return &member, nil
 	}
-	return &member, nil
 }

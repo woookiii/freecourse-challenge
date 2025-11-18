@@ -29,12 +29,12 @@ func (s *Service) CreateMember(req *dto.MemberSaveReq) error {
 				log.Println("Failed to create member", "Member name", req.Name, "err", err.Error())
 				return err
 			}
+		} else {
+			log.Println("Success create new member", "Member name", req.Name)
+			//TODO produce message to kafka in another goroutine
+			return nil
 		}
-		log.Println("Success create new member", "Member name", req.Name)
 
-		//TODO produce message to kafka in another goroutine
-
-		return nil
 	}
 
 }
