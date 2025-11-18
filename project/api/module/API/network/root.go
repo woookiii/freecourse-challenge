@@ -20,6 +20,8 @@ func NewNetwork(cfg *config.Config, s *service.Service) *Network {
 		port:    cfg.Info.Port,
 	}
 
+	setGin(n.engine)
+
 	return n
 }
 
