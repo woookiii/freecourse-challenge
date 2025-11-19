@@ -8,30 +8,38 @@ import (
 	"github.com/google/uuid"
 )
 
-func (r Repository) CreateMember(name string, email string, password string) error {
+func (r Repository) CreateMember(name string, email string, password string) (*entity.Member, error) {
+	member := entity.Member{
+		Id:          uuid.New(),
+		Name:        name,
+		Email:       email,
+		Password:    password,
+		Role:        "USER",
+		CreatedTime: time.Now(),
+	}
 	if tx, err := r.db.Begin(); err != nil {
-		return err
+		return nil, err
 	} else if result, err := tx.Exec(
 		"INSERT INTO member (id, name, email, password, role, created_time, updated_time, deleted_time) VALUES ($1, $2, $3, $4, $5, $6, $7, $8);",
-		uuid.New().String(),
-		name,
-		email,
-		password,
+		member.Id,
+		member.Name,
+		member.Email,
+		member.Password,
 		"USER",
-		time.Now(),
+		member.CreatedTime,
 		nil,
 		nil,
 	); err != nil {
 		tx.Rollback()
 		log.Println("failed to insert member", err.Error())
-		return err
+		return nil, err
 	} else {
 		count, _ := result.RowsAffected()
 		tx.Commit()
 		log.Println("Success to insert member", "count", count)
 	}
 
-	return nil
+	return &member, nil
 }
 
 func (r Repository) FindMemberByEmail(email string) (*entity.Member, error) {

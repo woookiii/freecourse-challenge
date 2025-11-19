@@ -13,7 +13,7 @@ func (s *Service) CreateMember(req *dto.MemberSaveReq) error {
 		return nil
 	} else if hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost); err != nil {
 		return err
-	} else if err := s.repository.CreateMember(
+	} else if m, err := s.repository.CreateMember(
 		req.Name,
 		req.Email,
 		string(hashedPassword),
@@ -22,7 +22,7 @@ func (s *Service) CreateMember(req *dto.MemberSaveReq) error {
 		return err
 	} else {
 		log.Println("Success create new member", "Member name", req.Name)
-		//TODO produce message to kafka in another goroutine
+
 		return nil
 	}
 
