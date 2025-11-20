@@ -13,7 +13,7 @@ type Kafka struct {
 }
 
 func NewKafka(cfg *config.Config) *Kafka {
-	producer, err := connectProducer([]string{cfg.Kafka.URL})
+	producer, err := connectProducer([]string{cfg.Kafka.URL1, cfg.Kafka.URL2})
 	if err != nil {
 		panic(err)
 	}

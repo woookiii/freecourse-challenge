@@ -3,8 +3,9 @@ database = "postgres"
 url = "postgres://root:1234@localhost:5432/litdb?sslmode=disable"
 
 [kafka]
-url = "localhost:9092"
+url1 = "localhost:9092"
+url2 = "localhost:9093"
 
 [info]
-port = ":9090"
+port = ":8080"
 service = "alpha"
