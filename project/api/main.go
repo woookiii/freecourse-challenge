@@ -2,6 +2,7 @@ package main
 
 import (
 	"api/config"
+	"api/kafka"
 	"api/module/API"
 	"flag"
 
@@ -17,6 +18,7 @@ func main() {
 
 	fx.New(
 		fx.Provide(func() *config.Config { return cfg }),
+		fx.Provide(func() *kafka.Kafka { return kafka.NewKafka(cfg) }),
 
 		fx.Provide(API.NewAPI),
 

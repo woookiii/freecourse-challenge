@@ -1,8 +1,9 @@
 package config
 
 import (
-	"github.com/naoina/toml"
 	"os"
+
+	"github.com/naoina/toml"
 )
 
 type Config struct {
@@ -10,6 +11,10 @@ type Config struct {
 		Database string
 		URL      string
 	} `toml:"db"`
+
+	Kafka struct {
+		URL string
+	} `toml:"kafka"`
 
 	Info struct {
 		Port    string
