@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"worker/config"
+	"worker/module/connector"
 
 	"go.uber.org/fx"
 )
@@ -16,6 +17,10 @@ func main() {
 
 	fx.New(
 		fx.Provide(func() *config.Config { return cfg }),
+
+		fx.Provide(connector.NewConnector),
+
+		fx.Invoke(func(_ *connector.Connector) {}),
 	).Run()
 
 }

@@ -46,7 +46,7 @@ func (k *Kafka) Close() error {
 
 func connectProducer(brokers []string) (sarama.AsyncProducer, error) {
 	cfg := sarama.NewConfig()
-	cfg.ClientID = "member-client"
+	cfg.ClientID = "producer-client"
 	cfg.Producer.Return.Successes = true
 	cfg.Producer.Return.Errors = true
 	cfg.Producer.Compression = sarama.CompressionZSTD
