@@ -13,7 +13,8 @@ type Config struct {
 	} `toml:"db"`
 
 	Kafka struct {
-		URLS []string
+		URLS    []string
+		GroupID string
 	} `toml:"kafka"`
 }
 

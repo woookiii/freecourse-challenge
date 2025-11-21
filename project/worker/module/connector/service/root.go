@@ -13,3 +13,7 @@ type Service struct {
 func NewService(r *repository.Repository, k *kafka.Kafka) *Service {
 	return &Service{r, k}
 }
+
+func (s *Service) Start() error {
+	return s.kafka.GetMessage([]string{"member"})
+}

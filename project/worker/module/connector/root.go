@@ -9,18 +9,22 @@ import (
 
 type Connector struct {
 	config *config.Config
-	kafka  *kafka.Kafka
 }
 
 func NewConnector(
 	cfg *config.Config,
-	k *kafka.Kafka,
 ) *Connector {
-	c := &Connector{cfg, k}
+	c := &Connector{cfg}
 
 	r := repository.NewRepository(cfg)
 
-	service.NewService(r, k)
+	s := service.NewService(r)
+	
+	k := kafka.Kafka{}
+
+	go func() {
+		s.Start()
+	}()
 
 	return c
 }
