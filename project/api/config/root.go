@@ -13,8 +13,7 @@ type Config struct {
 	} `toml:"db"`
 
 	Kafka struct {
-		URL1 string
-		URL2 string
+		URLS []string
 	} `toml:"kafka"`
 
 	Info struct {

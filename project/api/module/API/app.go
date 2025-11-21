@@ -10,13 +10,14 @@ import (
 
 type API struct {
 	config *config.Config
+	kafka  *kafka.Kafka
 }
 
 func NewAPI(
 	cfg *config.Config,
 	k *kafka.Kafka,
 ) *API {
-	api := &API{cfg}
+	api := &API{cfg, k}
 
 	r := repository.NewRepository(cfg)
 

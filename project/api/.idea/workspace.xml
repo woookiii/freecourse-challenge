@@ -5,33 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b412af9-19ce-4df6-a64f-4b19b205190e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/webserver.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/copilot.data.migration.agent.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/copilot.data.migration.ask.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/copilot.data.migration.ask2agent.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/copilot.data.migration.edit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/config.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/config/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/kafka/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/app.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/app.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/dto/member.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/dto/member.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/entity/member.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/entity/member.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/network/member.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/network/member.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/network/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/network/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/network/util.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/network/util.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/repository/member.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/repository/member.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/repository/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/repository/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/service/member.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/service/member.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/module/API/service/root.go" beforeDir="false" afterPath="$PROJECT_DIR$/../webserver/module/API/service/root.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../study/geosqlwithcdn/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../study/geosqlwithcdn/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../study/qrauthscrapcron/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../study/qrauthscrapcron/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,67 +57,50 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultGoTemplateProperty&quot;: &quot;Go File&quot;,
-    &quot;Go Build.go build api.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.GoLinterPluginOnboarding&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.GoLinterPluginStorageMigration&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.go.modules.go.list.on.any.changes.was.set&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/jungwook&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/jungwook/GolandProjects/project/api/main.go&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultGoTemplateProperty": "Go File",
+    "Go Build.go build api.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.GoLinterPluginOnboarding": "true",
+    "RunOnceActivity.GoLinterPluginStorageMigration": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "RunOnceActivity.go.modules.go.list.on.any.changes.was.set": "true",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "last_opened_file_path": "/Users/jungwook/GolandProjects/project/webserver",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "/Users/jungwook/GolandProjects/project/api/main.go",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.idea" />
       <recent name="$PROJECT_DIR$/module/API" />
       <recent name="$PROJECT_DIR$/module/member" />
       <recent name="$PROJECT_DIR$/module/common/network" />
       <recent name="$PROJECT_DIR$/module/common" />
-      <recent name="$PROJECT_DIR$/module/API/types/entity" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
-      <module name="webserver" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <method v="2" />
-    </configuration>
-    <configuration name="go build api" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
-      <module name="webserver" />
+    <configuration name="go build webserver" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
       <working_directory value="$PROJECT_DIR$" />
       <kind value="PACKAGE" />
-      <package value="api" />
+      <package value="webserver" />
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$/main.go" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
-      <module name="webserver" />
-      <working_directory value="$PROJECT_DIR$" />
-      <kind />
-      <directory value="$PROJECT_DIR$" />
-      <filePath value="$PROJECT_DIR$" />
-      <framework value="gotest" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Build.go build api" />
+        <item itemvalue="Go Build.go build webserver" />
       </list>
     </recent_temporary>
   </component>
