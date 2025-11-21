@@ -1,0 +1,6 @@
+[db]
+database = "postgres"
+url = "postgres://root:1234@localhost:5433/litdb?sslmode=disable"
+
+[kafka]
+urls = ["localhost:9092", "localhost:9093"]
