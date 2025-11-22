@@ -3,7 +3,7 @@ package kafka
 import (
 	"encoding/json"
 	"log"
-	"worker/module/connector/entity"
+	"worker-search/connector/entity"
 
 	"github.com/IBM/sarama"
 )

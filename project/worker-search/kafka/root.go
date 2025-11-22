@@ -9,6 +9,7 @@ import (
 	"sync"
 	"syscall"
 	"worker-search/config"
+	"worker-search/connector/service"
 
 	"github.com/IBM/sarama"
 )
@@ -55,7 +56,7 @@ func (k *Kafka) GetMessage(topics []string) error {
 				if errors.Is(err, sarama.ErrClosedConsumerGroup) {
 					return
 				}
-				log.Println("Error from consumer: %v", err)
+				log.Printf("Error from consumer: %v", err)
 			}
 
 			if ctx.Err() != nil {
