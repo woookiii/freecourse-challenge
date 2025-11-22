@@ -9,24 +9,26 @@ import (
 	"sync"
 	"syscall"
 	"worker/config"
+	"worker/module/connector/service"
 
 	"github.com/IBM/sarama"
 )
 
 type Kafka struct {
-	ready     chan bool
-	messageCh chan *sarama.ConsumerMessage
-	client    sarama.ConsumerGroup
+	ready    chan bool
+	consumer sarama.ConsumerGroup
+	service  *service.Service
 }
 
-func NewKafka(cfg *config.Config) *Kafka {
-	client, err := connectConsumer(cfg.Kafka.URLS, cfg.Kafka.GroupID)
+func NewKafka(cfg *config.Config, s *service.Service) *Kafka {
+	consumer, err := connectConsumer(cfg.Kafka.URLS, cfg.Kafka.GroupID)
 	if err != nil {
 		log.Panicf("Error creating consumer group client: %v", err)
 	}
 	return &Kafka{
-		ready:  make(chan bool),
-		client: client,
+		ready:    make(chan bool),
+		consumer: consumer,
+		service:  s,
 	}
 }
 
@@ -44,17 +46,13 @@ func connectConsumer(brokers []string, groupID string) (sarama.ConsumerGroup, er
 
 func (k *Kafka) GetMessage(topics []string) error {
 	ctx, cancel := context.WithCancel(context.Background())
-	handler := ConsumerHandler{
-		ready:     k.ready,
-		messageCh: k.messageCh,
-	}
 
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		for {
-			if err := k.client.Consume(ctx, topics, &handler); err != nil {
+			if err := k.consumer.Consume(ctx, topics, k); err != nil {
 				if errors.Is(err, sarama.ErrClosedConsumerGroup) {
 					return
 				}
@@ -88,13 +86,13 @@ func (k *Kafka) GetMessage(topics []string) error {
 			log.Println("terminating: via signal")
 			keepRunning = false
 		case <-sigusr1:
-			toggleConsumptionFlow(k.client, &consumptionIsPaused)
+			toggleConsumptionFlow(k.consumer, &consumptionIsPaused)
 		}
 	}
 	cancel()
 	wg.Wait()
 
-	if err := k.client.Close(); err != nil {
+	if err := k.consumer.Close(); err != nil {
 		log.Panicf("Error closing client: %v", err)
 		return err
 	}

@@ -1,6 +1,7 @@
 package connector
 
 import (
+	"log"
 	"worker/config"
 	"worker/kafka"
 	"worker/module/connector/repository"
@@ -19,11 +20,15 @@ func NewConnector(
 	r := repository.NewRepository(cfg)
 
 	s := service.NewService(r)
-	
-	k := kafka.Kafka{}
+
+	k := kafka.NewKafka(cfg, s)
 
 	go func() {
-		s.Start()
+		err := k.GetMessage([]string{"member"})
+		if err != nil {
+			log.Printf("Fail to get message : %v", err)
+			return
+		}
 	}()
 
 	return c
