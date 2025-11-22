@@ -11,6 +11,10 @@ type Config struct {
 		URLS    []string
 		GroupID string
 	} `toml:"kafka"`
+
+	Elasticsearch struct {
+		URLS []string
+	}
 }
 
 func NewConfig(path string) *Config {

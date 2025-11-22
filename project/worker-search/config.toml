@@ -1,3 +1,6 @@
 [kafka]
 urls = ["localhost:9092", "localhost:9093"]
 groupID = "create-doc-elasticsearch"
+
+[Elasticsearch]
+urls = ["localhost:9200"]
