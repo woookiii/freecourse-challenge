@@ -32,7 +32,7 @@ func (k *Kafka) PushMessage(topic string, message []byte) error {
 
 	select {
 	case succeedMsg := <-k.producer.Successes():
-		log.Println("Success to produce message", succeedMsg)
+		log.Printf("Success to produce message: %v", succeedMsg.Metadata)
 		return nil
 	case err := <-k.producer.Errors():
 		log.Println("Failed to produce message:", err)

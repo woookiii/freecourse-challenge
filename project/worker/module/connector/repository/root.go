@@ -3,6 +3,8 @@ package repository
 import (
 	"database/sql"
 	"worker/config"
+
+	_ "github.com/lib/pq"
 )
 
 type Repository struct {

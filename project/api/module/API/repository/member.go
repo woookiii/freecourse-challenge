@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (r Repository) CreateMember(name string, email string, password string) (*entity.Member, error) {
+func (r *Repository) CreateMember(name string, email string, password string) (*entity.Member, error) {
 	member := entity.Member{
 		Id:          uuid.New(),
 		Name:        name,
@@ -36,13 +36,13 @@ func (r Repository) CreateMember(name string, email string, password string) (*e
 	} else {
 		count, _ := result.RowsAffected()
 		tx.Commit()
-		log.Println("Success to insert member", "count", count)
+		log.Printf("Success to insert member - affected row count: %v", count)
 	}
 
 	return &member, nil
 }
 
-func (r Repository) FindMemberByEmail(email string) (*entity.Member, error) {
+func (r *Repository) FindMemberByEmail(email string) (*entity.Member, error) {
 	var member entity.Member
 
 	if err := r.db.QueryRow(

@@ -56,7 +56,7 @@ func (k *Kafka) GetMessage(topics []string) error {
 				if errors.Is(err, sarama.ErrClosedConsumerGroup) {
 					return
 				}
-				log.Panicf("Error from consumer: %v", err)
+				log.Println("Error from consumer: %v", err)
 			}
 
 			if ctx.Err() != nil {
@@ -93,7 +93,7 @@ func (k *Kafka) GetMessage(topics []string) error {
 	wg.Wait()
 
 	if err := k.consumer.Close(); err != nil {
-		log.Panicf("Error closing client: %v", err)
+		log.Printf("Error closing client: %v", err)
 		return err
 	}
 	return nil

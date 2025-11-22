@@ -50,7 +50,7 @@ func (r *Repository) SaveMember(member *entity.Member) error {
 	}
 	count, _ := result.RowsAffected()
 	tx.Commit()
-	log.Printf("Success to insert member - count: %v", count)
+	log.Printf("Success to insert member - affected row count: %v", count)
 
 	return nil
 }
