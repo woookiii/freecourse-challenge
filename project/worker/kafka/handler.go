@@ -1,6 +1,12 @@
 package kafka
 
-import "github.com/IBM/sarama"
+import (
+	"encoding/json"
+	"log"
+	"worker/module/connector/entity"
+
+	"github.com/IBM/sarama"
+)
 
 func (k *Kafka) Setup(_ sarama.ConsumerGroupSession) error {
 	close(k.ready)
@@ -16,7 +22,16 @@ func (k *Kafka) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.C
 		select {
 		case msg := <-claim.Messages():
 			session.MarkMessage(msg, "")
-			k.service.
+			var member entity.Member
+			if err := json.Unmarshal(msg.Value, &member); err != nil {
+				log.Printf("Fail to unmarshal msg value to member struct: %v", err)
+				continue
+			}
+			err := k.service.SaveMember(&member)
+			if err != nil {
+				log.Printf("Fail to save member to replica db: %v", err)
+				continue
+			}
 		case <-session.Context().Done():
 			return nil
 		}
