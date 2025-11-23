@@ -1,8 +1,0 @@
-[kafka]
-urls = ["pkc-e82om.ap-northeast-2.aws.confluent.cloud:9092"]
-APIKey = "KXUFDPMD56HECEL6"
-secret = "cfltHngHaNiIa+QEp5uZjQhQwbisBH8HIFJqtrDh97sdwHO2U6efOpFDAnB5FqEw"
-clientId = "ccloud-go-client-65fad313-91b8-4017-99e7-41d17777777"
-
-[redis]
-urls = ["localhost:6379"]
