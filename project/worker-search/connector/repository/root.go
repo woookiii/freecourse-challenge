@@ -15,7 +15,8 @@ func NewRepository(config *config.Config) *Repository {
 	r := new(Repository)
 
 	cfg := elasticsearch.Config{
-		Addresses: config.Elasticsearch.URLS,
+		CloudID: config.Elasticsearch.CloudID,
+		APIKey:  config.Elasticsearch.APIKey,
 	}
 	var err error
 	r.typedClient, err = elasticsearch.NewTypedClient(cfg)

@@ -13,7 +13,7 @@ type Kafka struct {
 }
 
 func NewKafka(cfg *config.Config) *Kafka {
-	producer, err := connectProducer(cfg.Kafka.URLS)
+	producer, err := connectProducer(cfg)
 	if err != nil {
 		panic(err)
 	}
@@ -32,7 +32,7 @@ func (k *Kafka) PushMessage(topic string, message []byte) error {
 
 	select {
 	case succeedMsg := <-k.producer.Successes():
-		log.Printf("Success to produce message: %v", succeedMsg.Metadata)
+		log.Printf("Success to produce message - partition: %v", succeedMsg.Partition)
 		return nil
 	case err := <-k.producer.Errors():
 		log.Println("Failed to produce message:", err)
@@ -44,9 +44,17 @@ func (k *Kafka) Close() error {
 	return k.producer.Close()
 }
 
-func connectProducer(brokers []string) (sarama.AsyncProducer, error) {
+func connectProducer(config *config.Config) (sarama.AsyncProducer, error) {
 	cfg := sarama.NewConfig()
-	cfg.ClientID = "producer-client"
+	cfg.ClientID = config.Kafka.ClientId
+	cfg.Net.SASL.Enable = true
+	cfg.Net.SASL.Version = 1
+	cfg.Net.SASL.Mechanism = sarama.SASLTypePlaintext
+	cfg.Net.SASL.User = config.Kafka.APIKey
+	cfg.Net.SASL.Password = config.Kafka.Secret
+	cfg.Net.TLS.Enable = true
+	cfg.Net.SASL.Handshake = true
+
 	cfg.Producer.Return.Successes = true
 	cfg.Producer.Return.Errors = true
 	cfg.Producer.Compression = sarama.CompressionZSTD
@@ -57,5 +65,5 @@ func connectProducer(brokers []string) (sarama.AsyncProducer, error) {
 	//cfg.Producer.RequiredAcks = sarama.WaitForAll
 	//cfg.Net.MaxOpenRequests = 1
 
-	return sarama.NewAsyncProducer(brokers, cfg)
+	return sarama.NewAsyncProducer(config.Kafka.URLS, cfg)
 }

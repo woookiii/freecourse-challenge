@@ -8,12 +8,15 @@ import (
 
 type Config struct {
 	Kafka struct {
-		URLS    []string
-		GroupID string
+		URLS     []string
+		APIKey   string
+		Secret   string
+		ClientId string
 	} `toml:"kafka"`
 
 	Elasticsearch struct {
-		URLS []string
+		CloudID string
+		APIKey  string
 	}
 }
 

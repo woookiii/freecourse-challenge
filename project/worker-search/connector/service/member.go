@@ -9,11 +9,11 @@ func (s *Service) SaveMember(member *entity.Member) error {
 
 	err := s.repository.SaveMember(member)
 	if err != nil {
-		log.Println("Failed to save member to replica db", "Member name", member.Name, "err", err)
+		log.Println("Failed to save member to elastic search", "Member name", member.Name, "err", err)
 		return err
 	}
 
-	log.Println("Success to save new member to replica db", "Member name", member.Name)
+	log.Println("Success to save new member to elastic search", "Member name", member.Name)
 
 	return nil
 }

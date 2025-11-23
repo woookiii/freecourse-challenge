@@ -21,7 +21,7 @@ type Kafka struct {
 }
 
 func NewKafka(cfg *config.Config, s *service.Service) *Kafka {
-	consumer, err := connectConsumer(cfg.Kafka.URLS, cfg.Kafka.GroupID)
+	consumer, err := connectConsumer(cfg, "replica-db-maker")
 	if err != nil {
 		log.Panicf("Error creating consumer group client: %v", err)
 	}
@@ -32,16 +32,24 @@ func NewKafka(cfg *config.Config, s *service.Service) *Kafka {
 	}
 }
 
-func connectConsumer(brokers []string, groupID string) (sarama.ConsumerGroup, error) {
+func connectConsumer(config *config.Config, groupID string) (sarama.ConsumerGroup, error) {
 	cfg := sarama.NewConfig()
-	cfg.ClientID = "consumer-client"
+	cfg.ClientID = config.Kafka.ClientId
+	cfg.Net.SASL.Enable = true
+	cfg.Net.SASL.Version = 1
+	cfg.Net.SASL.Mechanism = sarama.SASLTypePlaintext
+	cfg.Net.SASL.User = config.Kafka.APIKey
+	cfg.Net.SASL.Password = config.Kafka.Secret
+	cfg.Net.TLS.Enable = true
+	cfg.Net.SASL.Handshake = true
+
 	cfg.Consumer.Return.Errors = true
 	cfg.Consumer.Group.Rebalance.GroupStrategies = []sarama.BalanceStrategy{sarama.NewBalanceStrategySticky()}
 	//if balance strategy need to be change flexible, use switch-case with config di
 	cfg.Consumer.Offsets.Initial = sarama.OffsetOldest
 	//this setting make possible to consume message which is stored but not consumed for certain reason like worker server down
 
-	return sarama.NewConsumerGroup(brokers, groupID, cfg)
+	return sarama.NewConsumerGroup(config.Kafka.URLS, groupID, cfg)
 }
 
 func (k *Kafka) GetMessage(topics []string) error {
