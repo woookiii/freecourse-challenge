@@ -1,0 +1,9 @@
+[kafka]
+urls = ["pkc-e82om.ap-northeast-2.aws.confluent.cloud:9092"]
+APIKey = "KXUFDPMD56HECEL6"
+secret = "cfltHngHaNiIa+QEp5uZjQhQwbisBH8HIFJqtrDh97sdwHO2U6efOpFDAnB5FqEw"
+clientId = "ccloud-go-client-65fad313-91b8-4017-99e7-41d177a7976e"
+
+[Elasticsearch]
+cloudID = "my-es:YXNpYS1ub3J0aGVhc3QzLmdjcC5lbGFzdGljLWNsb3VkLmNvbTo0NDMkZmE2ODVkZGM1NmZkNDQ0Yjk3NjA2NjI0ZDhlNjAyOWMkNDI4OWMxODY5MjRiNDAzODg0NTNkMjJkNmUyYjdmMWU="
+APIKey = "cGNYTnJwb0JMQjJyQWY5ZTVjQWM6U0JnZzQxZ1FkOTBaRlVrRElVUk5KUQ=="

@@ -32,9 +32,9 @@ func (r *Repository) SaveMember(member *entity.Member) error {
 		Request(d).
 		Do(context.Background())
 	if err != nil {
-		log.Printf("Fail to put document in member index: %v - error: %v", res, err)
+		log.Printf("Fail to put document in member index, error: %v", err)
 		return err
 	}
-	log.Printf("Success to put document in member index: %v", res)
+	log.Printf("Success to put document in member index, result: %v", res.Result)
 	return nil
 }
