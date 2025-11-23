@@ -23,6 +23,7 @@ require (
 	github.com/naoina/toml v0.1.1 // indirect
 	github.com/pierrec/lz4/v4 v4.1.22 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20250401214520-65e299d6c5c9 // indirect
+	github.com/redis/rueidis v1.0.68 // indirect
 	go.uber.org/dig v1.19.0 // indirect
 	go.uber.org/fx v1.24.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect

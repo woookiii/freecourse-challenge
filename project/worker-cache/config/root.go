@@ -13,6 +13,10 @@ type Config struct {
 		Secret   string
 		ClientId string
 	} `toml:"kafka"`
+
+	Redis struct {
+		URLS []string
+	}
 }
 
 func NewConfig(path string) *Config {
