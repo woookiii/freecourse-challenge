@@ -1,2 +1,5 @@
 #ignore configuration files
 config.toml
+
+#ignore jetbrain
+.idea/
