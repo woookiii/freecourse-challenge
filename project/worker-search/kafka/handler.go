@@ -22,6 +22,7 @@ func (k *Kafka) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.C
 		select {
 		case msg := <-claim.Messages():
 			session.MarkMessage(msg, "")
+			//TODO: call different methods for respective topics
 			var member entity.Member
 			if err := json.Unmarshal(msg.Value, &member); err != nil {
 				log.Printf("Fail to unmarshal msg value to member struct: %v", err)
@@ -29,7 +30,7 @@ func (k *Kafka) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.C
 			}
 			err := k.service.SaveMember(&member)
 			if err != nil {
-				log.Printf("Fail to save member to replica db: %v", err)
+				log.Printf("Fail to save member to elasticsearch: %v", err)
 				continue
 			}
 		case <-session.Context().Done():
