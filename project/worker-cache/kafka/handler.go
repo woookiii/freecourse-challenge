@@ -30,7 +30,7 @@ func (k *Kafka) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.C
 			}
 			err := k.service.SaveMember(&member)
 			if err != nil {
-				log.Printf("Fail to save member to elasticsearch: %v", err)
+				log.Printf("Fail to save member to redis: %v", err)
 				continue
 			}
 		case <-session.Context().Done():

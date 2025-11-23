@@ -9,6 +9,7 @@ import (
 	"sync"
 	"syscall"
 	"worker-cache/config"
+	"worker-cache/connector/service"
 
 	"github.com/IBM/sarama"
 )
