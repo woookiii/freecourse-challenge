@@ -18,7 +18,6 @@ func main() {
 		fx.Provide(func() *config.Config { return cfg }),
 
 		fx.Provide(),
-
 	).Run()
 
 }
