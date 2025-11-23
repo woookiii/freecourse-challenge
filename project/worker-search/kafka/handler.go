@@ -1,9 +1,7 @@
 package kafka
 
 import (
-	"encoding/json"
 	"log"
-	"worker-search/connector/entity"
 
 	"github.com/IBM/sarama"
 )
@@ -22,17 +20,11 @@ func (k *Kafka) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.C
 		select {
 		case msg := <-claim.Messages():
 			session.MarkMessage(msg, "")
-			//TODO: call different methods for respective topics
-			var member entity.Member
-			if err := json.Unmarshal(msg.Value, &member); err != nil {
-				log.Printf("Fail to unmarshal msg value to member struct: %v", err)
-				continue
-			}
-			err := k.service.SaveMember(&member)
+			err := k.service.SaveMessage(msg)
 			if err != nil {
-				log.Printf("Fail to save member to elasticsearch: %v", err)
-				continue
+				log.Printf("Fail to save message: %v", err)
 			}
+			continue
 		case <-session.Context().Done():
 			return nil
 		}

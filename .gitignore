@@ -3,3 +3,5 @@ config.toml
 
 #ignore jetbrain
 .idea/
+
+.DS_Store
