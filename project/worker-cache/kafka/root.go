@@ -21,7 +21,7 @@ type Kafka struct {
 }
 
 func NewKafka(cfg *config.Config, s *service.Service) *Kafka {
-	consumer, err := connectConsumer(cfg, "redis-connector")
+	consumer, err := connectConsumer(cfg, "consumer-for-redis")
 	if err != nil {
 		log.Panicf("Error creating consumer group client: %v", err)
 	}
