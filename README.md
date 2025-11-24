@@ -46,7 +46,12 @@ kafka 클라이언트의 경우 shopify에서 만들어져서, 지금은 IBM에�
 redis 클라이언트의 경우 go-redis보다 벤치마크 성능이 빠른 reuidis를 학습하여 사용했습니다.
 elastic search 클라이언트의 경우 go-elasticsearch를 사용했고 typedClient(Spring data JPA와 같이 쿼리작성을 도와줌)를 학습하여 사용했습니다
 
+시연영상입니다.
+
+[시연영상링크](https://drive.google.com/file/d/1SZp5H3qYYYkIBCOo29JdC_gYINRWOMfV/view?usp=sharing)
+
 주요하게 사용된 외부 라이브러리 리스트
+
 https://github.com/IBM/sarama
 
 https://github.com/redis/rueidis
@@ -58,8 +63,6 @@ https://github.com/uber-go/fx
 https://github.com/gin-gonic/gin
 
 
-시연영상입니다.
-[시연영상링크](https://drive.google.com/file/d/1SZp5H3qYYYkIBCOo29JdC_gYINRWOMfV/view?usp=sharing)
 
 
 ---
