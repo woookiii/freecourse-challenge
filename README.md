@@ -1,4 +1,4 @@
-study 디렉토리는 주로 golang, elasticsearch에 대한 공부기록을 담고 있습니다.
+study 디렉토리는 주로 golang과, 자바 스프링을 통해 한 elasticsearch에 대한 공부기록을 담고 있습니다.
 
 studyrecord.md에는 공부 기록들, 증거들?을 정리해두었습니다.
 
