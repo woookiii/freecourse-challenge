@@ -22,8 +22,8 @@ confluent kafka cloud에 발행합니다.
 동기화를 빠르게 수행할 수 있다고 생각했습니다.
 
 나머지 세개의 서버는 서버가 시작되면, 동일하게 카프카 컨슈머 클라이언트를 통해 발행될 토픽에 대해 별개의 고루틴에서 무한 루프를 돌며 리슨을 하고 있습니다.
-메시지가 감지되면, 메시지의 토픽을 확인하여 토픽에 맞게 메시지를 unmarshalling(deserializing)하여 replicadb, redis, elastic search(cloud)에
-저장하도록 했습니다.
+메시지가 감지되면, 메시지의 토픽을 확인하여 토픽에 맞게 메시지를 unmarshalling(deserializing)하여 
+각자 연결되어있는 replicadb, redis, elastic search(cloud)에저장하도록 했습니다.
 
 redis의 경우, 전체객체를 다시 byte로 marshalling해서 string으로 캐스팅을 해서 저장을 하기 보다는, redis 자료구조중 하나인 
 hset을 이용하여 필드별로 저장을 하여, 나중에 캐싱된 값을 수정하거나, get할 때, 원하는 필드값만 읽어오는 것이 용이하도록 했습니다. 
