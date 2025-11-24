@@ -1,4 +1,4 @@
-study는 주로 golang, elasticsearch에 대한 공부기록을 담고 있습니다.
+study 디렉토리는 주로 golang, elasticsearch에 대한 공부기록을 담고 있습니다.
 
 project에 대해서 설명해보겠습니다.
 
@@ -14,7 +14,7 @@ db에 저장이 성공하면, 사용자에게 200 ok response를 주는 것과 �
 db에 insert 성공한 객체를 byte로 marshalling(serializing)하여 서버가 시작할 때, 만들어진 카프카 프로듀서 클라이언트를 통해 메세지를 
 confluent kafka cloud에 발행합니다. 
 
-이렇게 하게 되면, 하나의 고루틴을 통해 카프카에 메세지를 발행하고 메시지가 제대로 발행됬는지 확인(ack)하고,
+이렇게 하게 되면, 하나의 고루틴을 통해 카프카에 메세지를 발행하고 카프카로부터 메시지가 제대로 발행됬는지 확인(ack)하고,
 사용자에게 200 ok response를 주는 것보다 빠르게 사용자에게 응답값을 보여줄 수 있고,
 
 동일하게 하나의 고루틴을 사용하여 사용자에게 200 ok response를 주고 나서 카프카에 메세지를 발행하여 
