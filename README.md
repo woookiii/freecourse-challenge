@@ -16,8 +16,8 @@ studyrecord.md에는 공부 기록들, 증거들?을 정리해두었습니다.
 POST 형태로 회원가입 요청이 오게 되면 이 웹서버는 이메일 중복확인 후에, uuid와 created_time을 생성, 패스워드를 암호화하여 master db에 저장합니다.
 
 db에 저장이 성공하면, 사용자에게 200 ok response를 주는 것과 별개로 새로운 고루틴(스레드와 비슷한 개념이지만 os런타임이 아닌 go자체런타임)을 통해 동시에 
-db에 insert 성공한 객체를 byte로 marshalling(serializing)하여 서버가 시작할 때, 만들어진 카프카 프로듀서 클라이언트를 통해 메세지를 
-confluent kafka cloud에 발행합니다. 
+db에 insert 성공한 객체를 byte로 marshalling(serializing)하여 서버가 시작할 때, 
+만들어진 카프카 프로듀서 클라이언트를 통해 메세지를 confluent kafka cloud에 발행합니다. 
 
 이렇게 하게 되면, 하나의 고루틴을 통해 카프카에 메세지를 발행하고 
 카프카로부터 메시지가 제대로 발행됬는지 확인(acknowledging)을 받고, 
@@ -29,8 +29,9 @@ confluent kafka cloud에 발행합니다.
 
 나머지 세개의 서버는 서버가 시작되면, 동일하게 카프카 컨슈머 클라이언트를 통해 발행될 토픽에 대해 
 별개의 고루틴에서 무한 루프를 돌며 리슨을 하고 있습니다.
-메시지가 감지되면, 메시지의 토픽을 확인하여 토픽에 맞게 메시지를 unmarshalling(deserializing)하여 
-각자 연결되어있는 replicadb, redis, elastic search(cloud)에 저장하도록 했습니다.
+메시지가 감지되면, 메시지의 토픽을 확인하여 토픽에 맞게 메시지를 객체로
+unmarshalling(deserializing)하여 각자 연결되어있는 replicadb, redis, elastic search(cloud)에
+저장하도록 했습니다.
 
 redis의 경우, 전체객체를 다시 byte로 marshalling해서 string으로 캐스팅을 해서 저장을 하기 보다는,
 redis 자료구조중 하나인 hset을 이용하여 필드별로 저장을 하여, 
@@ -44,6 +45,18 @@ db의 경우 postgres를 sql/database 표준 데이터베이스 라이브러리�
 kafka 클라이언트의 경우 shopify에서 만들어져서, 지금은 IBM에서 관리가 되고 있는 sarama를 학습하여 사용했고,
 redis 클라이언트의 경우 go-redis보다 벤치마크 성능이 빠른 reuidis를 학습하여 사용했습니다.
 elastic search 클라이언트의 경우 go-elasticsearch를 사용했고 typedClient(Spring data JPA와 같이 쿼리작성을 도와줌)를 학습하여 사용했습니다
+
+주요하게 사용된 외부 라이브러리 리스트
+https://github.com/IBM/sarama
+
+https://github.com/redis/rueidis
+
+https://github.com/elastic/go-elasticsearch
+
+https://github.com/uber-go/fx
+
+https://github.com/gin-gonic/gin
+
 
 시연영상입니다.
 [시연영상링크](https://drive.google.com/file/d/1SZp5H3qYYYkIBCOo29JdC_gYINRWOMfV/view?usp=sharing)
@@ -179,7 +192,7 @@ api key와 secret key가 깃헙에 올라가서 이를 지우려고 했는데, �
 고루틴을 적용시켜보고 싶어서, 웹서버에서 새로운 고루틴을 통해 카프카에 메시지를 보내는 방식을 취했는데,
 데이터베이스에서 로그를 읽는 방법 또한 공부를 프리코스이후에 해보아야 겠다고 생각했습니다.
 
-또 시간관계상 오픈서치 grpc 클라이언트를 이용하지 못하고, 엘라스틱서치를 선택했는데, 우버에서 개발한 
+시간관계상 오픈서치 grpc 클라이언트를 이용하지 못하고, 엘라스틱서치를 선택했는데, 우버에서 개발한 
 오픈서치 grpc 클라이언트를 다음에는 grpc를 어떻게 하는 것인지 이번 프리코스를 통해서 공부하게 되었으니까
 다음엔 사용해보자고 생각했습니다.
 
@@ -192,7 +205,7 @@ partition counsumer를 통해서 0번 파티션것만 consume하는 것을 확�
 소비를 해야 된다는 것을  공부를 해두었어서, 직접 consumer group을 sarama library에서 있는 것을 확인하고 예제를 
 두세개 정도 찾아서 학습해서 프로젝트에 적용시켜서 파티션과 관계없이 토픽에 대해 동기화 서버가 consume할 수 있도록 설정을 했습니다.
 
-또 레디스의 경우 pub sub과 caching기능이 아예 별개의 기능이라는 것을 정확하게 이해하게 되었고, redis또한 pub sub과 별개로
+레디스의 경우 pub sub과 caching기능이 아예 별개의 기능이라는 것을 정확하게 이해하게 되었고, redis또한 pub sub과 별개로
 kafka와 비슷한 stream이라는 것이 자료구조로 존재해서, 운용비용이 비싸고, 튜닝을 요구하는 카프카 사용을 감당할 수 없다면, 
 사용해보기에 좋겠다고 생각했습니다. 또 reuidis 클라이언트 라이브러리 리드미를 읽어보다가 클라이언트 캐싱이라는,
 레디스 클라이언트 서버 측에서 레디스 캐싱과 별개로 캐싱을 해서 더 빠른 응답속도를 낼 수 있는 것이 존재한다는 것을 알게 되었고,
@@ -211,11 +224,12 @@ golang을 학습하고 프로젝트하면서 고루틴, 사실상의 멀티스�
  컨슈머의 경우 circular import를 피하려면 프로듀서가 있는 웹서버의 구조와 반대로
  카프카 컨슈머가 컨트롤러 레이어처럼 서비스를 호출하도록 만들었어야 되어서 중간에 계층구조를 수정했습니다.
 
-또, 처음에 컨슈머를 구성할 때는, 카프카 컨슈머측에서 메시지가 들어오면 토픽을 확인해서 그 토픽에 맞는
+처음에 컨슈머를 구성할 때는, 카프카 컨슈머측에서 메시지가 들어오면 토픽을 확인해서 그 토픽에 맞는
 서비스를 호출하도록 만들었는데, 이게 이상하다고 생각이 되어서 서비스 로직으로 토픽 분기처리를 해주는 로직을
 옮겼고, 향후에 프로젝트를 더 만들어 나갈 때도 토픽, db테이블이 추가되어도 확장하기가 간단하게 설계를 했습니다.
 이러한 과정에서 계층분리, 단일책임원칙에 대해서 고민을 많이 했던 것 같습니다.
 
-또 서칭의 경우 기능자체는 프로젝트에 포함시킬 수 없었어서, 다음에는 이번 프리코스를 통해 공부하게 된
+서칭의 경우 기능자체는 프로젝트에 포함시킬 수 없었어서, 다음에는 이번 프리코스를 통해 공부하게 된
 서칭 필터를 적용시킨 인덱스도 생성해보고,프론트엔드와 연동해서 쿼리도 실시간으로 날려보는 프로젝트를
 해보고 싶다고 생각했습니다.
+
