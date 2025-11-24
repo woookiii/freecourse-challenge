@@ -91,8 +91,12 @@ scylladb가 cassandra를 기반으로 구축되었다고 들어서 공부를 해
 java, spring에 관련 자료를 찾지 못해서 배우지 못했던 것과 나중에 프로젝트에 적용시키면 재밌고 좋을 것 같다고 여겨지는 것도 배울 수 있었습니다.
 
 mysql의 geospatial sql -> jpa를 통해서도 쉽게 사용가능
-qr로 google authenticator에 등록해서 totp로 인증 -> 실제로 사용되는 서비스라 신기했고, 따라서 해봤는데 핸드폰 authenticator앱에서도 잘 작동
+
+qr로 google authenticator에 등록해서 totp로 인증 -> 실제로 사용되는 서비스라 신기했고, 따라서 해봤는데 핸드폰
+authenticator앱에서도 잘 작동
+
 cloudfront를 통한 edge location cdn 캐싱 -> 자바 스프링과 별로 관련이 없는데, 배워보고 싶었지만 자료를 찾지 못했는데 이번기회에 우연히 배우게 됨
+
 aws lamda를 통해서 사진 압축 -> aws lamda의 경우 파이썬이나 nodejs가 성능이 go나 자바보다 빠르다는 것도 알게됨
 
 redis golang 클라이언트 라이브러리의 경우 go-redis가 있었고 reuidis라는 것이 있었는데
@@ -154,33 +158,55 @@ golang을 학습하고 프로젝트하면서 고루틴, 사실상의 멀티스�
 
 # 도움이 되었던 참고자료
 [The Golang Crash Course](https://youtu.be/50ewcV8PsI4?si=lGAa9d7_JpVccsC7) 4배속으로 보다가 필요한 부분만
+
 [Effective Go - The Go Programming Language](https://go.dev/doc/effective_go) 검색해서 일부 참고
+
 https://www.youtube.com/watch?v=d_L64KT3SFM gin restapi todolist
+
 [A Tour of Go](https://go.dev/tour/methods/4)
+
 [What is the difference between parameter and receiver](https://stackoverflow.com/questions/17932722/what-is-the-difference-between-parameter-and-receiver)
+
 [Language Guide \(proto 3\)](https://protobuf.dev/programming-guides/proto3/)
+
 [Quick start](https://grpc.io/docs/languages/go/quickstart/) grpc script for proto file to go file
+
 [guide/style.md at master · uber-go/guide](https://github.com/uber-go/guide/blob/master/style.md) uber go lang 컨벤션
+
 [Refactoring Go in Large Codebases - Brittany Ellich | GopherCon EU 2025](https://www.youtube.com/watch?v=fhlnan0dSUE) 고퍼콘 eu 리팩토링팁
+
 **~[https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful](https://stackoverflow.com/questions/37628/what-is-reflection-and-why-is-it-useful)~**
 [Key Uri Format](https://github.com/google/google-authenticator/wiki/Key-Uri-Format)google authenticator totp qr 생성시 유의점
+
 [Kafka Producer - Do I need to close the producer connection?](https://forum.confluent.io/t/kafka-producer-do-i-need-to-close-the-producer-connection/2968)
+
 [Apache Kafka - Producer Retry and max.in.flight.requests.per.connection - GeeksforGeeks](https://www.geeksforgeeks.org/apache-kafka/apache-kafka-producer-retry-and-max-in-flight-requests-per-connection/)
 [Apache Kafka](https://kafka.apache.org/28/documentation.html#producerconfigs_max.in.flight.requests.per.connection) client 설정때문에 부분 참고
+
 [zstd](https://en.wikipedia.org/wiki/Zstd) 카프카 메시지 압축 알고리즘
+
 [Kafka sync and async producer example in Golang](https://www.inanzzz.com/index.php/post/6anr/kafka-sync-and-async-producer-example-in-golang) golang의 goroutine을 활용한 aync producer
 https://www.youtube.com/watch?v=4EdrCc29vXY sync producer
+
 [bootstrap-server in Kafka Configuration](https://www.baeldung.com/java-kafka-bootstrap-server)
 https://go.dev/doc/faq#What_is_the_purpose_of_the_project golang faq
+
 [System Design Solutions: When to use Cassandra and when not to](https://medium.com/geekculture/system-design-solutions-when-to-use-cassandra-and-when-not-to-496ba51ef07a) 분산 db
+
 [sarama/examples/consumergroup/main.go at main · IBM/sarama](https://github.com/IBM/sarama/blob/main/examples/consumergroup/main.go)
+
 [sarama package - github.com/Shopify/sarama - Go Packages](https://pkg.go.dev/github.com/Shopify/sarama#ConsumerGroup.Consume) kafka go client sarama consumer group examples
+
 [Kafka Message Key: A Comprehensive Guide](https://www.confluent.io/learn/kafka-message-key/#kafka-message-key-and-consumer-behavior)
+
 [Go | Go](https://www.elastic.co/docs/reference/elasticsearch/clients/go) This is the official Go client for Elasticsearch.
+
 [Client-side caching introduction](https://redis.io/docs/latest/develop/clients/client-side-caching/) client side redis caching 레디스가 아니라 레디스를 사용하는 클라이언트 서버를 이용한 캐싱 로직
+
 [Using Redis Hash to deal with collections](https://medium.com/@danilosilva_37526/using-redis-hash-to-deal-with-collections-569449ac0384)  why redis hash is better than set get
 
 공부를 하다보니, 자바 스프링으로 개발을 하는 것과 큰 차이를 거의 느끼지 못했습니다(차이라면 빌드와 초기 부팅시간은 빠르지만 hibernates 정도 되는 수준의 orm이 없다는 정도…?) 동시성 제어를 위해 사용하는 고루틴을 grpc를 배우다가 함께 배웠는데 쉽고, 매력적이었고 단순했고, 많은 사람들이 고랭을 택하는 납득이 갈만한 이유같았습니다. 그걸 더 알게해준 유익한 자료입니다.
+
 [Google I/O 2012 - Go Concurrency Patterns](https://www.youtube.com/watch?v=f6kdp27TYZs)
 
 [gRPC APIs](https://docs.opensearch.org/latest/api-reference/grpc-apis/index/#using-grpc-apis) opensearch grpc
@@ -188,7 +214,9 @@ https://go.dev/doc/faq#What_is_the_purpose_of_the_project golang faq
 
 솔직히 잘 이해가 잘가지 않았서 개인적으로는 별로 도움이 되지 못했던 참고자료
 [gRPC in 5 minutes | Eric Anderson & Ivy Zhuang, Google](https://www.youtube.com/watch?v=njC24ts24Pg&t=71s) 
+
 [당근마켓 gRPC 서비스 운영 노하우 | 당근마켓 SRE 밋업 1회](https://www.youtube.com/watch?v=igHrQPzLVRw)
+
 [Quick Introduction](https://entgo.io/docs/getting-started) ent go (golang orm)
 
 
