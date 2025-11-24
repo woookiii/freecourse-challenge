@@ -20,18 +20,18 @@ db에 insert 성공한 객체를 byte로 marshalling(serializing)하여 서버�
 만들어진 카프카 프로듀서 클라이언트를 통해 메세지를 confluent kafka cloud에 발행합니다. 
 
 이렇게 하게 되면, 하나의 고루틴을 통해 카프카에 메세지를 발행하고 
-카프카로부터 메시지가 제대로 발행됬는지 확인(acknowledging)을 받고, 
+카프카로부터 메시지가 제대로 발행됬는지 확인(acknowledging)을 받은 후에,
 사용자에게 200 ok response를 주는 것보다 빠르게 사용자에게 응답값을 보여줄 수 있고,
 
-동일하게 하나의 고루틴을 사용하여 사용자에게 200 ok response를 주고 나서 카프카에 메세지를 발행하여 
-캐싱과 서칭, replica db에 대한 master db와의 동기화를 하는 것보다 빠르게 메시지를 발행, 
-동기화가 빠르게 진행될 수 있다고 생각했습니다.
+동일하게 하나의 고루틴을 사용하여 사용자에게 200 ok response를 주고 난 후에, 
+카프카에 메세지를 발행하여 캐싱과 서칭, replica db에 대한 master db와의 동기화를 하는 것보다 
+더 이른 시점에 메시지를 발행하고 더 이른 시점에 동기화를 진행할 수 있다고 생각했습니다.
 
-나머지 세개의 서버는 서버가 시작되면, 동일하게 카프카 컨슈머 클라이언트를 통해 발행될 토픽에 대해 
+나머지 세개의 서버는 서버가 시작되면, 각자 카프카 컨슈머 클라이언트를 통해 발행될 토픽에 대해 
 별개의 고루틴에서 무한 루프를 돌며 리슨을 하고 있습니다.
 메시지가 감지되면, 메시지의 토픽을 확인하여 토픽에 맞게 메시지를 객체로
-unmarshalling(deserializing)하여 각자 연결되어있는 replicadb, redis, elastic search(cloud)에
-저장하도록 했습니다.
+unmarshalling(deserializing)하여 각자 연결되어있는 
+replicadb, redis, elastic search(cloud)에 저장하도록 했습니다.
 
 redis의 경우, 전체객체를 다시 byte로 marshalling해서 string으로 캐스팅을 해서 저장을 하기 보다는,
 redis 자료구조중 하나인 hset을 이용하여 필드별로 저장을 하여, 
