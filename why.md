@@ -41,28 +41,10 @@ mysql, redis, kafka, msa architecture with spring cloud, k8s, aws eks, rdb, ec2,
 유튜브로 자료 검색중에 이러한 영상을 보게 됬는데
 [Top Kafka Use Cases You Should Know](https://www.youtube.com/watch?v=Ajz6dBp_EB4)
 
-+------------------+      +------------------+
-|  Source Database |----->| Transaction Log  |
-+------------------+      +------------------+
-                                |
-                                v
-                            +--------+
-                            | Kafka  |
-                            +--------+
-                                |
-         +----------------------+----------------------+
-         |                      |                      |
-+------------------+  +------------------+  +------------------+
-| ElasticSearch    |  | Redis Connector  |  | Database         |
-| Connector        |  |                  |  | Connector        |
-+------------------+  +------------------+  +------------------+
-         |                      |                      |
-         v                      v                      v
-+---------+           +---------+           +------------------+
-| Elastic |           | Redis   |           | Replica Data     |
-+---------+           +---------+           +------------------+
-
 영상에서 이러한 하이레벨 아키텍쳐를 보게되었습니다. 
+
+![alt text](image.png)
+
 
 안그래도 개인 프로젝트에 검색기능을 구현하려고 엘라스틱 서치를 공부해서 도입하려고 했었고,
 레디스 캐싱을 @Cacheput 을 통해서만은 구현을 하기가 어려워 보였는데,
